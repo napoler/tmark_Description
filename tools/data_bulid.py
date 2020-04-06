@@ -6,7 +6,8 @@ import tkitText
 from config import *
 from tqdm import tqdm
 import time
-
+import numpy as np   
+import math
 def _read_data( input_file):
     """Reads a BIO data."""
     max_length=100
@@ -95,32 +96,45 @@ data_path='../data'
 ttf=tkitFile.File()
 tt=tkitText.Text()
 data=[]
+limit=480 #这里配置多少字分段
 for f_path in ttf.all_path(data_path):
     
     if f_path.endswith(".anns"):
         # print(_read_data(f_path))
-        one=_read_data(f_path)
+        one_data=_read_data(f_path)
+
+        h=math.ceil(len(one_data[0][0])/limit)
+        x = np.array(one_data[0][0]+["[PAD]"]*(limit*h-len(one_data[0][0])))     #x是一维数组
+        y = np.array(one_data[0][1]+["X"]*(limit*h-len(one_data[0][0])))     #x是一维数组
+
+        x = x.reshape((h,limit))                #将x重塑为2行4列的二维数组
+        y = y.reshape((h,limit))                #将x重塑为2行4列的二维数组
+        # print(x)
         m=[]
         w=[]
-        for i,it in enumerate( one[0][0]):
-            if it.endswith("实体"):
-                # print(it)
-                # ner.append((it,one[0][1][i]))
-                m.append('实体')
-                w.append(one[0][1][i])
-                one[0][0][i]='O'
-            elif it=='E-实体' or it=="S-实体":
-                # print(it)
-                # ner.append((it,one[0][1][i]))
-                m.append('实体')
-                m.append('[SEP]')
-                w.append(one[0][1][i])
-                w.append('X')
-                one[0][0][i]='O'          
-        one[0][0]=m+['X']+one[0][0]
-        one[0][1]=w+['[SEP]']+one[0][1]
-        # print(one)
-        data.append(one[0])
+        for one_x,one_y in zip(x.tolist(),y.tolist()):
+
+            one=[]   
+            for i,(x,y) in enumerate(zip( one_x,one_y)) :
+                if x.endswith("实体"):
+                    # print(it)
+                    # ner.append((it,one[0][1][i]))
+                    m.append('实体')
+                    w.append(y)
+                    one_x[i]='O'
+                elif x=='E-实体' or x=="S-实体":
+                    # print(it)
+                    # ner.append((it,one[0][1][i]))
+                    m.append('实体')
+                    m.append('[SEP]')
+                    w.append(y)
+                    w.append('X')
+                    one_x[i]='O'   
+                # print(one_y)
+                # exit()
+            one=((m+['X']+one_x,w+['[SEP]']+one_y))
+                # one[1]=
+            data.append(one)
 # print(data)
 c=int(len(data)*0.8)
 print(len(data))
