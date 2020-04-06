@@ -1,60 +1,11 @@
 import tkitFile
-from elasticsearch import Elasticsearch
-from elasticsearch_dsl import Search
-from elasticsearch_dsl import Q
+import tkitText
+# from elasticsearch import Elasticsearch
+# from elasticsearch_dsl import Search
+# from elasticsearch_dsl import Q
 from config import *
 from tqdm import tqdm
 import time
-def search_content(keyword):
-    client = Elasticsearch()
-    q = Q("multi_match", query=keyword, fields=['title', 'body'])
-    # s = s.query(q)
-
-    # def search()
-    s = Search(using=client)
-    # s = Search(using=client, index="pet-index").query("match", content="金毛")
-    s = Search(using=client, index="pet-index").query(q)
-    response = s.execute()
-    return response
-    # for hit in response:
-    #     print(hit.meta)
-    #     print(hit.meta.score)
-    #     print(hit)
-def data_pre_train_mongo_text(keyword,train_path='../data/' ):
-    """
-    构建文本数据将单篇文章一个txt文件
-    """
- 
-    # tt=tkitText.Text()
-    #这里定义mongo数据
-    # client = pymongo.MongoClient("localhost", 27017)
-    # DB_kg_scrapy = client.kg_scrapy
-
-    # q={}
-    i=0
-    # content_pet
-    # for item in DB_kg_scrapy.kg_content.find(q):
-    # time_path='0'
-    ttf=tkitFile.File()
-    ttf.mkdir(train_path+keyword)
-    for item in tqdm(search_content(keyword)):
-        i=i+1
-        # if i%10000==0:
-            
-            # time_path =str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-        #     break
-        name= str(int(time.time()))+item.title[:10]+".txt"
-        # file_path=os.path.join(train_path,name)
-        file_path=train_path+keyword+"/"+name
-        # print(file_path)
-        try:
-            with open(file_path,'w',encoding = 'utf-8') as f1:
-                f1.write(item.title+"\n")
-                f1.write(item.content+"\n")
-        except:
-            pass
-
-
 
 def _read_data( input_file):
     """Reads a BIO data."""
@@ -64,7 +15,8 @@ def _read_data( input_file):
         lines = []
         words = []
         labels = []
-        stop = ["。","!","！"]
+        # stop = ["。","!","！"]
+        stop=[]
         for line in f:
             contends = line.strip()
             
@@ -126,12 +78,59 @@ def _read_data( input_file):
             labels.append(label)
         return lines
 
- 
+def save_data(data,file="data.txt"):
+    """
+    构建数据保存
+    """
+    with open(file,'w',encoding = 'utf-8') as f1:
+        for it in data:
+            for m,w in zip(it[0],it[1]):
+                # print(m,w)
+                f1.write(w+"\t"+m+"\n")
+            # print("end\n\n\n\n")
+            f1.write("\n")
 
-# x= input("输入：")
-while True:
-    x= input("输入关键词：")
-    data_pre_train_mongo_text(x,train_path='../data/' )
+
+data_path='../data'
+ttf=tkitFile.File()
+tt=tkitText.Text()
+data=[]
+for f_path in ttf.all_path(data_path):
     
+    if f_path.endswith(".anns"):
+        # print(_read_data(f_path))
+        one=_read_data(f_path)
+        m=[]
+        w=[]
+        for i,it in enumerate( one[0][0]):
+            if it.endswith("实体"):
+                # print(it)
+                # ner.append((it,one[0][1][i]))
+                m.append('实体')
+                w.append(one[0][1][i])
+                one[0][0][i]='O'
+            elif it=='E-实体' or it=="S-实体":
+                # print(it)
+                # ner.append((it,one[0][1][i]))
+                m.append('实体')
+                m.append('[SEP]')
+                w.append(one[0][1][i])
+                w.append('X')
+                one[0][0][i]='O'          
+        one[0][0]=m+['X']+one[0][0]
+        one[0][1]=w+['[SEP]']+one[0][1]
+        # print(one)
+        data.append(one[0])
+# print(data)
+c=int(len(data)*0.8)
+print(len(data))
+train_data=data[:c]
+dev_data=data[c:]
 
+save_data(train_data,file="../data/train.txt")
+save_data(dev_data,file="../data/dev.txt")
 
+ 
+        # print()
+        # for line in open(f_path):
+# line.endswith("实体")
