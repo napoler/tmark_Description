@@ -96,40 +96,72 @@ data_path='../data'
 ttf=tkitFile.File()
 tt=tkitText.Text()
 data=[]
-limit=480 #这里配置多少字分段
+limit=100 #这里配置多少字分段
 for f_path in ttf.all_path(data_path):
     
     if f_path.endswith(".anns"):
         # print(_read_data(f_path))
         one_data=_read_data(f_path)
+        print(one_data)
+        m=[]
+        w=[]
+        # one_data_j=[]
+        x_data=[]
+        y_data=[]
+        for one in one_data:
+            x_data=x_data+one[0]
+            y_data=y_data+one[1]
+        for i,(x,y) in enumerate(zip(x_data,y_data)):
+            # print(x)
+            if x=='E-实体' or x=="S-实体":
+                # print(x,y)
+                # ner.append((it,one[0][1][i]))
+                m.append('实体')
+                m.append('X')
+                w.append(y)
+                w.append('，')
 
-        h=math.ceil(len(one_data[0][0])/limit)
-        x = np.array(one_data[0][0]+["[PAD]"]*(limit*h-len(one_data[0][0])))     #x是一维数组
-        y = np.array(one_data[0][1]+["X"]*(limit*h-len(one_data[0][0])))     #x是一维数组
+                x_data[i]='O'
+            elif x=="B-实体" or x=="M-实体":
+                # print('end')
+                # print(it)
+                # ner.append((it,one[0][1][i]))
+                m.append('实体')
+                w.append(y)
+
+                x_data[i]='O'  
+            # elif x=='':
+            # print(x)
+        del(m[-1])
+        del(w[-1])
+        print(m,w)
+        h=math.ceil(len(x_data)/limit)
+        padd=(limit*h-len(x_data))
+        x = np.array(x_data+["X"]*padd)     #x是一维数组
+        y = np.array(y_data+["[PAD]"]*padd)     #x是一维数组
 
         x = x.reshape((h,limit))                #将x重塑为2行4列的二维数组
         y = y.reshape((h,limit))                #将x重塑为2行4列的二维数组
         # print(x)
-        m=[]
-        w=[]
+
         for one_x,one_y in zip(x.tolist(),y.tolist()):
 
             one=[]   
-            for i,(x,y) in enumerate(zip( one_x,one_y)) :
-                if x.endswith("实体"):
-                    # print(it)
-                    # ner.append((it,one[0][1][i]))
-                    m.append('实体')
-                    w.append(y)
-                    one_x[i]='O'
-                elif x=='E-实体' or x=="S-实体":
-                    # print(it)
-                    # ner.append((it,one[0][1][i]))
-                    m.append('实体')
-                    m.append('[SEP]')
-                    w.append(y)
-                    w.append('X')
-                    one_x[i]='O'   
+            # for i,(x,y) in enumerate(zip( one_x,one_y)) :
+            #     if x.endswith("实体"):
+            #         # print(it)
+            #         # ner.append((it,one[0][1][i]))
+            #         m.append('实体')
+            #         w.append(y)
+            #         one_x[i]='O'
+            #     elif x=='E-实体' or x=="S-实体":
+            #         # print(it)
+            #         # ner.append((it,one[0][1][i]))
+            #         m.append('实体')
+            #         m.append('，')
+            #         w.append(y)
+            #         w.append('X')
+            #         one_x[i]='O'   
                 # print(one_y)
                 # exit()
             one=((m+['X']+one_x,w+['[SEP]']+one_y))
