@@ -102,8 +102,10 @@ def save_labels(data,file="labels.txt"):
             for m in it[0]:
                 labels[m]=1
                 # print(m,w)
+        keys=[]
         for key in labels.keys():
-            f1.write(key+"\n")
+            keys.append(key)
+        f1.write("\n".join(keys))
 
 
 
