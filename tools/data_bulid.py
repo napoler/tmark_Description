@@ -92,17 +92,32 @@ def save_data(data,file="data.txt"):
             f1.write("\n")
 
 
+def save_labels(data,file="labels.txt"):
+    """
+    构建数据保存
+    """
+    labels={}
+    with open(file,'w',encoding = 'utf-8') as f1:
+        for it in data:
+            for m in it[0]:
+                labels[m]=1
+                # print(m,w)
+        for key in labels.keys():
+            f1.write(key+"\n")
+
+
+
 data_path='../data'
 ttf=tkitFile.File()
 tt=tkitText.Text()
 data=[]
-limit=100 #这里配置多少字分段
+limit=480 #这里配置多少字分段
 for f_path in ttf.all_path(data_path):
     
     if f_path.endswith(".anns"):
         # print(_read_data(f_path))
         one_data=_read_data(f_path)
-        print(one_data)
+        # print(one_data)
         m=[]
         w=[]
         # one_data_j=[]
@@ -116,10 +131,11 @@ for f_path in ttf.all_path(data_path):
             if x=='E-实体' or x=="S-实体":
                 # print(x,y)
                 # ner.append((it,one[0][1][i]))
+
                 m.append('实体')
                 m.append('X')
                 w.append(y)
-                w.append('，')
+                w.append('#')
 
                 x_data[i]='O'
             elif x=="B-实体" or x=="M-实体":
@@ -132,9 +148,25 @@ for f_path in ttf.all_path(data_path):
                 x_data[i]='O'  
             # elif x=='':
             # print(x)
-        del(m[-1])
-        del(w[-1])
-        print(m,w)
+        w=w[:-1]
+        w="".join(w)
+        print(w)
+        w=list(set(w.split("#")))
+        print(w)
+        w=list("#".join(w))
+        m=["实体"]*len(w)
+        for wi,wit in enumerate(w):
+            if w=="#":
+                m[wi]="X"
+        print(w,m)
+
+
+            
+
+
+        # del(m[-1])
+        # del(w[-1])
+        # print(m,w)
         h=math.ceil(len(x_data)/limit)
         padd=(limit*h-len(x_data))
         x = np.array(x_data+["X"]*padd)     #x是一维数组
@@ -168,13 +200,16 @@ for f_path in ttf.all_path(data_path):
                 # one[1]=
             data.append(one)
 # print(data)
-c=int(len(data)*0.8)
+c=int(len(data)*0.7)
+b=int(len(data)*0.85)
 print(len(data))
 train_data=data[:c]
-dev_data=data[c:]
-
+dev_data=data[c:b]
+test_data=data[b:]
 save_data(train_data,file="../data/train.txt")
 save_data(dev_data,file="../data/dev.txt")
+save_data(test_data,file="../data/test.txt")
+save_labels(data,"../data/labels.txt")
 
  
         # print()
