@@ -87,7 +87,7 @@ def save_data(data,file="data.txt"):
         for it in data:
             for m,w in zip(it[0],it[1]):
                 # print(m,w)
-                f1.write(w+"\t"+m+"\n")
+                f1.write(w+" "+m+"\n")
             # print("end\n\n\n\n")
             f1.write("\n")
 
