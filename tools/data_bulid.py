@@ -211,7 +211,8 @@ test_data=data[b:]
 save_data(train_data,file="../data/train.txt")
 save_data(dev_data,file="../data/dev.txt")
 save_data(test_data,file="../data/test.txt")
-save_labels(data,"../data/labels.txt")
+#一般无需重新生成labels文件
+# save_labels(data,"../data/labels.txt")
 
  
         # print()

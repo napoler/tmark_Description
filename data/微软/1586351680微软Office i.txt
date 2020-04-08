@@ -1,0 +1,26 @@
+微软Office iOS/iPadOS版更新：从头开始，重新设计 - 微软,Office - IT之家
+IT之家2月11日消息 昨日，微软Office应用Microsoft Word、PowerPoint、Excel发布了iOS/iPadOS版的全新更新。
+
+微软表示，其对应用重新进行了设计，这三款应用现已“从头开始，重新设计”。微软同时更新了应用的“替换文字”窗格，通过添加有用的标题，还可将元素标记为装饰。
+
+ **Word**
+
+▲Microsoft Word for iOS
+
+▲Microsoft Word for iPadOS
+
+ **Excel**
+
+  * 从头开始重新设计：我们对应用重新进行了设计，使其比以前更简单、更迅速、更美观。
+
+  * 已更新“替换文字”窗格：通过添加有用的标题，甚至可将元素标记为装饰，使内容更易于访问。
+
+  * 随时随地阅读和回复：无需打开工作簿即可直接从电子邮件回复批注和提及。  
+
+  * 随心所欲查找… 特此推出 XLOOKUP：逐行查找，使用 XLOOKUP 在表中或某一范围中查找所需的任何内容。
+
+ **PowerPoint**
+
+点此查看：MicrosoftWord/PowerPoint/Excel
+
+

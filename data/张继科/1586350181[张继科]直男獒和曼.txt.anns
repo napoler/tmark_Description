@@ -1,0 +1,947 @@
+[ O
+张 O
+继 O
+科 O
+] O
+直 O
+男 O
+獒 O
+和 O
+曼 O
+赤 O
+肯 O
+_ O
+百 O
+度 O
+百 O
+科 O
+
+
+
+# O
+[ O
+张 O
+继 O
+科 O
+] O
+直 O
+男 O
+獒 O
+和 O
+曼 O
+赤 O
+肯 O
+
+
+_ O
+_ O
+编 O
+辑 O
+_ O
+_ O
+锁 O
+定 O
+_ O
+_ O
+讨 O
+论 O
+
+
+本 O
+词 O
+条 O
+缺 O
+少 O
+
+
+* O
+* O
+概 O
+述 O
+图 O
+* O
+* O
+
+
+， O
+补 O
+充 O
+相 O
+关 O
+内 O
+容 O
+使 O
+词 O
+条 O
+更 O
+完 O
+整 O
+， O
+还 O
+能 O
+快 O
+速 O
+升 O
+级 O
+， O
+赶 O
+紧 O
+来 O
+
+
+编 O
+辑 O
+
+
+吧 O
+！ O
+
+
+张 B-实体
+继 M-实体
+科 M-实体
+] M-实体
+直 M-实体
+男 M-实体
+獒 M-实体
+和 M-实体
+曼 M-实体
+赤 M-实体
+肯 E-实体
+是 O
+一 B-描述
+部 M-描述
+同 M-描述
+人 M-描述
+类 M-描述
+型 M-描述
+网 M-描述
+络 M-描述
+小 M-描述
+说 E-描述
+， O
+作 B-描述
+者 M-描述
+是 M-描述
+好 M-描述
+哥 M-描述
+哥 E-描述
+。 O
+
+
+[ O
+1 O
+] O
+
+
+[ O
+@ O
+中 O
+文 O
+名 O
+称 O
+
+
+[ O
+张 O
+继 O
+科 O
+] O
+直 O
+男 O
+獒 O
+和 O
+曼 O
+赤 O
+肯 O
+# O
+描 O
+述 O
+* O
+] O
+
+
+[ O
+@ O
+作 O
+者 O
+
+
+好 O
+哥 O
+哥 O
+# O
+描 O
+述 O
+* O
+] O
+
+[ O
+@ O
+类 O
+型 O
+
+
+同 O
+人 O
+# O
+描 O
+述 O
+* O
+] O
+
+
+山 O
+东 O
+青 O
+岛 O
+真 O
+爷 O
+们 O
+
+
+北 O
+京 O
+土 O
+著 O
+大 O
+飒 O
+蜜 O
+
+
+文 O
+案 O
+想 O
+不 O
+出 O
+来 O
+了 O
+， O
+你 O
+们 O
+记 O
+得 O
+我 O
+写 O
+的 O
+是 O
+老 O
+公 O
+就 O
+行 O
+
+
+… O
+… O
+… O
+… O
+
+
+封 O
+面 O
+用 O
+的 O
+是 O
+鸡 O
+腿 O
+子 O
+的 O
+图 O
+， O
+虽 O
+然 O
+我 O
+纠 O
+缠 O
+她 O
+私 O
+信 O
+要 O
+授 O
+权 O
+， O
+但 O
+是 O
+没 O
+有 O
+理 O
+我 O
+
+
+英 O
+雄 O
+救 O
+美 O
+
+- O
+- O
+- O
+
+英 O
+雄 O
+又 O
+救 O
+美 O
+
+被 O
+看 O
+破 O
+的 O
+小 O
+心 O
+思 O
+
+伤 O
+残 O
+人 O
+士 O
+路 O
+大 O
+微 O
+
+惊 O
+吓 O
+来 O
+的 O
+太 O
+快 O
+
+皱 O
+皱 O
+巴 O
+巴 O
+的 O
+老 O
+树 O
+皮 O
+
+乒 O
+乓 O
+球 O
+真 O
+有 O
+意 O
+思 O
+
+亲 O
+嘴 O
+真 O
+有 O
+意 O
+思 O
+
+臭 O
+不 O
+要 O
+脸 O
+
+非 O
+常 O
+时 O
+期 O
+
+一 O
+个 O
+梦 O
+
+接 O
+男 O
+朋 O
+友 O
+回 O
+家 O
+
+为 O
+了 O
+我 O
+媳 O
+妇 O
+儿 O
+
+亲 O
+了 O
+又 O
+亲 O
+
+与 O
+你 O
+相 O
+遇 O
+， O
+好 O
+幸 O
+运 O
+
+谁 O
+的 O
+幸 O
+运 O
+
+哥 O
+俩 O
+好 O
+啊 O
+五 O
+魁 O
+首 O
+啊 O
+
+番 O
+外 O
+
+何 O
+必 O
+互 O
+相 O
+伤 O
+害 O
+
+惹 O
+毛 O
+路 O
+微 O
+的 O
+人 O
+有 O
+危 O
+险 O
+
+穷 O
+酸 O
+的 O
+世 O
+界 O
+冠 O
+军 O
+
+再 O
+闹 O
+打 O
+你 O
+噢 O
+
+万 O
+一 O
+媳 O
+妇 O
+跑 O
+了 O
+呢 O
+
+为 O
+了 O
+脱 O
+团 O
+狗 O
+就 O
+狗 O
+
+她 O
+带 O
+他 O
+听 O
+演 O
+唱 O
+会 O
+
+一 O
+碗 O
+牛 O
+肉 O
+蛋 O
+花 O
+粥 O
+
+回 O
+家 O
+
+去 O
+或 O
+者 O
+不 O
+去 O
+
+战 O
+青 O
+岛 O
+
+无 O
+责 O
+任 O
+番 O
+外 O
+
+关 O
+键 O
+的 O
+关 O
+键 O
+
+投 O
+食 O
+时 O
+间 O
+
+女 O
+朋 O
+友 O
+去 O
+撩 O
+妹 O
+了 O
+
+藏 O
+獒 O
+病 O
+了 O
+
+被 O
+子 O
+分 O
+一 O
+半 O
+
+我 O
+是 O
+路 O
+微 O
+
+下 O
+坡 O
+和 O
+上 O
+坡 O
+
+又 O
+一 O
+番 O
+外 O
+
+冠 O
+军 O
+也 O
+得 O
+怂 O
+
+领 O
+带 O
+的 O
+诅 O
+咒 O
+
+出 O
+发 O
+
+想 O
+玩 O
+想 O
+躁 O
+想 O
+浪 O
+
+终 O
+究 O
+是 O
+你 O
+爸 O
+爸 O
+
+丁 O
+大 O
+宝 O
+贝 O
+不 O
+靠 O
+谱 O
+
+机 O
+场 O
+风 O
+波 O
+
+搅 O
+局 O
+最 O
+讨 O
+厌 O
+了 O
+
+莫 O
+名 O
+其 O
+妙 O
+的 O
+醋 O
+意 O
+
+弥 O
+漫 O
+的 O
+父 O
+爱 O
+
+摊 O
+上 O
+事 O
+了 O
+
+张 O
+继 O
+科 O
+？ O
+谁 O
+啊 O
+
+花 O
+式 O
+遛 O
+狗 O
+
+天 O
+堂 O
+有 O
+路 O
+你 O
+不 O
+走 O
+
+留 O
+职 O
+察 O
+看 O
+
+煎 O
+饼 O
+卷 O
+一 O
+切 O
+
+送 O
+上 O
+门 O
+来 O
+了 O
+
+我 O
+一 O
+般 O
+不 O
+动 O
+手 O
+
+手 O
+快 O
+有 O
+手 O
+慢 O
+无 O
+
+再 O
+无 O
+责 O
+任 O
+番 O
+外 O
+
+风 O
+雨 O
+总 O
+在 O
+阳 O
+光 O
+后 O
+
+路 O
+微 O
+开 O
+始 O
+搞 O
+事 O
+情 O
+了 O
+
+来 O
+啊 O
+， O
+互 O
+相 O
+伤 O
+害 O
+
+打 O
+一 O
+巴 O
+掌 O
+给 O
+个 O
+枣 O
+
+明 O
+目 O
+张 O
+胆 O
+调 O
+情 O
+
+逆 O
+否 O
+命 O
+题 O
+
+不 O
+如 O
+意 O
+之 O
+事 O
+十 O
+常 O
+八 O
+九 O
+
+方 O
+博 O
+的 O
+锅 O
+
+懒 O
+得 O
+写 O
+标 O
+题 O
+
+那 O
+些 O
+粉 O
+红 O
+的 O
+回 O
+忆 O
+
+暗 O
+搓 O
+搓 O
+的 O
+番 O
+外 O
+
+被 O
+x O
+x O
+撞 O
+了 O
+一 O
+下 O
+腰 O
+
+那 O
+是 O
+我 O
+媳 O
+妇 O
+儿 O
+
+悄 O
+咪 O
+咪 O
+的 O
+番 O
+外 O
+
+无 O
+法 O
+形 O
+容 O
+的 O
+番 O
+外 O
+
+你 O
+错 O
+哪 O
+了 O
+？ O
+
+幕 O
+后 O
+的 O
+推 O
+手 O
+之 O
+路 O
+微 O
+
+不 O
+可 O
+言 O
+语 O
+的 O
+番 O
+外 O
+
+大 O
+写 O
+的 O
+不 O
+羁 O
+
+小 O
+学 O
+生 O
+张 O
+继 O
+科 O
+
+怼 O
+王 O
+上 O
+线 O
+（ O
+上 O
+） O
+
+怼 O
+王 O
+上 O
+线 O
+（ O
+下 O
+） O
+
+满 O
+身 O
+名 O
+人 O
+字 O
+画 O
+
+拿 O
+签 O
+名 O
+和 O
+你 O
+换 O
+
+獒 O
+微 O
+C O
+P O
+之 O
+歌 O
+
+藏 O
+獒 O
+心 O
+里 O
+苦 O
+
+张 O
+继 O
+科 O
+被 O
+绿 O
+了 O
+？ O
+
+可 O
+怜 O
+人 O
+的 O
+可 O
+恨 O
+处 O
+
+明 O
+明 O
+喜 O
+欢 O
+我 O
+
+多 O
+情 O
+最 O
+是 O
+伤 O
+人 O
+
+天 O
+道 O
+好 O
+轮 O
+回 O
+
+苍 O
+天 O
+饶 O
+过 O
+谁 O
+
+嗨 O
+， O
+皮 O
+特 O
+
+宛 O
+若 O
+死 O
+狗 O
+一 O
+条 O
+
+信 O
+誉 O
+危 O
+机 O
+
+生 O
+如 O
+夏 O
+花 O
+
+手 O
+链 O
+
+老 O
+树 O
+得 O
+修 O
+
+他 O
+怎 O
+么 O
+就 O
+忘 O
+了 O
+呢 O
+？ O
+
+套 O
+路 O
+
+甜 O
+蜜 O
+的 O
+负 O
+担 O
+
+小 O
+登 O
+科 O
+
+
+. O
+. O
+. O
+. O
+. O
+. O
+
+
+参 O
+考 O
+资 O
+料 O
+
+
+
+
+

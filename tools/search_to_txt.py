@@ -43,12 +43,15 @@ def data_pre_train_mongo_text(keyword,train_path='../data/' ):
             
             # time_path =str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         #     break
+        if len(item.title+item.content)<200:
+            continue
         name= str(int(time.time()))+item.title[:10]+".txt"
         # file_path=os.path.join(train_path,name)
         file_path=train_path+keyword+"/"+name
         # print(file_path)
         try:
             with open(file_path,'w',encoding = 'utf-8') as f1:
+                
                 f1.write(item.title+"\n")
                 f1.write(item.content+"\n")
         except:
