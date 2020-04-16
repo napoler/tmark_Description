@@ -81,11 +81,21 @@ def _read_data( input_file):
             labels.append(label)
         return lines
 
+def load_pre(file="data.txt",save_data="save_data.txt"):
+    with open(file) as f:
+        lines = f.read()
+        # print(type(lines))
+        # print(lines)
+    with open(save_data,'w',encoding = 'utf-8') as f1:
+        f1.write(lines)
+        f1.write("\n")
+        f1.write("\n")
+
 def save_data(data,file="data.txt"):
     """
     构建数据保存
     """
-    with open(file,'w',encoding = 'utf-8') as f1:
+    with open(file,'a+',encoding = 'utf-8') as f1:
         for it in data:
             for m,w in zip(it[0],it[1]):
                 # print(m,w)
@@ -203,7 +213,7 @@ for f_path in ttf.all_path(data_path):
             one=((m+['X']+one_x,w+['[SEP]']+one_y))
                 # one[1]=
             data.append(one)
-# print(data)
+# # print(data)
 c=int(len(data)*0.7)
 b=int(len(data)*0.85)
 print(len(data))
@@ -214,9 +224,14 @@ test_data=data[b:]
 ttf=tkitFile.File()
 ttf.mkdir("../output")
 
+
+load_pre('../data/data/train.txt',"../output/train.txt")
+load_pre('../data/data/dev.txt',"../output/dev.txt")
+load_pre('../data/data/test.txt',"../output/test.txt")
 save_data(train_data,file="../output/train.txt")
 save_data(dev_data,file="../output/dev.txt")
 save_data(test_data,file="../output/test.txt")
+
 #一般无需重新生成labels文件
 # save_labels(data,"../data/labels.txt")
 
