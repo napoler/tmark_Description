@@ -208,9 +208,9 @@ print(len(data))
 train_data=data[:c]
 dev_data=data[c:b]
 test_data=data[b:]
-save_data(train_data,file="../data/train.txt")
-save_data(dev_data,file="../data/dev.txt")
-save_data(test_data,file="../data/test.txt")
+save_data(train_data,file="../output/train.txt")
+save_data(dev_data,file="../output/dev.txt")
+save_data(test_data,file="../output/test.txt")
 #一般无需重新生成labels文件
 # save_labels(data,"../data/labels.txt")
 
