@@ -4,6 +4,10 @@ from elasticsearch_dsl import Search
 from elasticsearch_dsl import Q
 from config import *
 from tqdm import tqdm
+from albert_pytorch import classify
+
+tclass = classify(model_name_or_path='../model/goodorbad/',num_labels=2,device='cpu')
+
 import time
 def search_content(keyword):
     client = Elasticsearch()
@@ -43,7 +47,12 @@ def data_pre_train_mongo_text(keyword,train_path='../data/' ):
             
             # time_path =str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         #     break
+
         if len(item.title+item.content)<200:
+            continue
+        p=tclass.pre(item.content)
+        # print(p)
+        if p==0:
             continue
         name= str(int(time.time()))+item.title[:10]+".txt"
         # file_path=os.path.join(train_path,name)

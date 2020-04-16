@@ -8,6 +8,8 @@ from tqdm import tqdm
 import time
 import numpy as np   
 import math
+import tkitFile
+
 def _read_data( input_file):
     """Reads a BIO data."""
     max_length=100
@@ -208,6 +210,10 @@ print(len(data))
 train_data=data[:c]
 dev_data=data[c:b]
 test_data=data[b:]
+
+ttf=tkitFile.File()
+ttf.mkdir("../output")
+
 save_data(train_data,file="../output/train.txt")
 save_data(dev_data,file="../output/dev.txt")
 save_data(test_data,file="../output/test.txt")

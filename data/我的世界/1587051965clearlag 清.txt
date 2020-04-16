@@ -1,0 +1,22 @@
+clearlag 清道夫插件 | 我的世界 | MC世界侠
+Clearlag 清道夫插件。大服务器必备插件，可以自动清理地上的掉落物品，减少服务器占用的内存和cpu的使用。是不是很实用呢？
+
+指令 | 描述 | 权限  
+---|---|---  
+/lagg clear | (清除实体) | lagg.clear  
+/lagg check [world1 world2...] | (计数单位) | lagg.check  
+/lagg reload | （重新加载调度/配置） | lagg.reload  
+/lagg killmobs | （杀死怪物） | lagg.killmobs  
+/lagg area <radius> | （给定半径内的实体） | lagg.area  
+/lagg unloadchunks | （卸载不需要的块） | lagg.unloadchunks  
+/lagg chunk [amount] | （定位可能延迟块） | lagg.chunk  
+/lagg tpchunk <x> <z> <world> | （传送块） | lagg.tpchunk  
+/lagg admin | （管理clearlag模块） | lagg.admin  
+/lagg gc | （试图释放记忆） | lagg.gc  
+/lagg tps | （查看当前TPS） | lagg.tps  
+/lagg halt | （临时禁用基本的服务器功能[怪物产卵等]） | lagg.halt  
+/lagg | （显示帮助页） | lagg.help  
+  
+适用版本：1.7-1.8
+
+
