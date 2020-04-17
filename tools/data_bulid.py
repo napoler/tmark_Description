@@ -12,7 +12,7 @@ import tkitFile
 
 def _read_data( input_file):
     """Reads a BIO data."""
-    max_length=100
+    max_length=480
     # num=max_length #定义每组包含的元素个数
     with open(input_file) as f:
         lines = []
@@ -20,68 +20,88 @@ def _read_data( input_file):
         labels = []
         # stop = ["。","!","！"]
         stop=[]
+        
         for line in f:
+            # print(line)
             contends = line.strip()
             
             # print(len(line.strip().split(' ')))
             word = line.strip().split(' ')[0]
             label = line.strip().split(' ')[-1]
+            if word=='':
+                continue
 
             if contends.startswith("-DOCSTART-"):
                 words.append('')
                 continue
             # if len(contends) == 0 and words[-1] == '。':
-            if len(contends) == 0:
-                # l = ' '.join([label for label in labels if len(label) > 0])
-                # w = ' '.join([word for word in words if len(word) > 0])
-                l=[label for label in labels if len(label) > 0]
-                w = [word for word in words if len(word) > 0]
-                if l==w:
-                    # print('xian')
-                    pass
-                else:
-                    w_one=[]
-                    l_one=[]
-                    # n=0
-                    tags={}
-                    for i,it in enumerate(w):
-                        #基于句子分段
-                        if it in stop:
-                            w_one.append(w[i])
-                            l_one.append(l[i])
-                            tags[l[i]]=0
-                            # 如果标记内容过少则忽略
-                            if len(tags)>1:
-                                lines.append([l_one, w_one])
-                            tags={}
-                            w_one=[]
-                            l_one=[]
-                        elif i==len(w)-1:
-                            if len(tags)>1:
-                                lines.append([l_one, w_one])
-                            tags={}
-                            w_one=[]
-                            l_one=[]
-                        else:
-                            tags[l[i]]=0
-                            w_one.append(w[i])
-                            l_one.append(l[i])
+            # print(word,label)
+            # words.append(word)
+            
+            # print("contends",contends)
+            # if len(contends) == 0:
+            #     # l = ' '.join([label for label in labels if len(label) > 0])
+            #     # w = ' '.join([word for word in words if len(word) > 0])
+            #     l=[label for label in labels if len(label) > 0]
+            #     w = [word for word in words if len(word) > 0]
+    
+                
+
+                # if l==w:
+                #     # print('xian')
+                #     pass
+                # else:
+                #     w_one=[]
+                #     l_one=[]
+                #     # n=0
+                #     tags={}
+                #     for i,it in enumerate(w):
+                #         print(it)
+                #         #基于句子分段
+                #         if it in stop:
+                #             w_one.append(w[i])
+                #             l_one.append(l[i])
+                #             tags[l[i]]=0
+                #             # 如果标记内容过少则忽略
+                #             if len(tags)>1:
+                #                 lines.append([l_one, w_one])
+                #             tags={}
+                #             w_one=[]
+                #             l_one=[]
+                #         elif i==len(w)-1:
+                #             if len(tags)>1:
+                #                 lines.append([l_one, w_one])
+                #             tags={}
+                #             w_one=[]
+                #             l_one=[]
+                #         else:
+                #             tags[l[i]]=0
+                #             w_one.append(w[i])
+                #             l_one.append(l[i])
                     
-                    # # 如果内容过长自动分段
-                    # if len(l)> max_length:
-                    #     for i in range(0,len(l),max_length):
-                    #         # print l[i:i+num]
-                    #         lines.append([l[i:i+max_length], w[i:i+max_length]])
-                    # else:
-                    #     lines.append([l, w])
-                words = []
-                labels = []
-                continue
+                #     # # 如果内容过长自动分段
+                #     # if len(l)> max_length:
+                #     #     for i in range(0,len(l),max_length):
+                #     #         # print l[i:i+num]
+                #     #         lines.append([l[i:i+max_length], w[i:i+max_length]])
+                #     # else:
+                #     #     lines.append([l, w])
+                # words = []
+                # labels = []
+                # continue
+
+            # print(word)
+            # print(label)
             words.append(word)
             labels.append(label)
+        one=[labels,words]
+        lines.append(one)
         return lines
 
 def load_pre(file="data.txt",save_data="save_data.txt"):
+    """
+    加载之前数据
+    """
     with open(file) as f:
         lines = f.read()
         # print(type(lines))
@@ -119,6 +139,12 @@ def save_labels(data,file="labels.txt"):
             keys.append(key)
         f1.write("\n".join(keys))
 
+# f_path="../data/清道夫鱼/1586186362清道夫鱼吃什么食物_.txt上海.anns"
+# one_data=_read_data(f_path)
+# print(one_data)
+# exit()
+
+
 
 
 data_path='../data'
@@ -126,12 +152,20 @@ ttf=tkitFile.File()
 tt=tkitText.Text()
 data=[]
 limit=480 #这里配置多少字分段
+anns=[]
+bad=0
+good=0
+bad_files=[]
 for f_path in ttf.all_path(data_path):
-    
+    # print(f_path)
     if f_path.endswith(".anns"):
+        # print(f_path)
+        anns.append(f_path)
         # print(_read_data(f_path))
         one_data=_read_data(f_path)
         # print(one_data)
+        if  len(one_data)==0:
+            print("no")
         m=[]
         w=[]
         # one_data_j=[]
@@ -164,15 +198,23 @@ for f_path in ttf.all_path(data_path):
             # print(x)
         w=w[:-1]
         w="".join(w)
-        print(w)
+        # print(w)
         w=list(set(w.split("#")))
-        print(w)
+        # print(w)
         w=list("#".join(w))
         m=["实体"]*len(w)
+        if len(w)==0:
+            print("没有标记忽略")
+            bad_files.append(f_path)
+            # print(f_path)
+            bad+=1
+            continue
+        else:
+            good+=1
         for wi,wit in enumerate(w):
             if w=="#":
                 m[wi]="X"
-        print(w,m)
+        # print(w,m)
 
 
             
@@ -213,10 +255,17 @@ for f_path in ttf.all_path(data_path):
             one=((m+['X']+one_x,w+['[SEP]']+one_y))
                 # one[1]=
             data.append(one)
+            # print("1111")
 # # print(data)
 c=int(len(data)*0.7)
 b=int(len(data)*0.85)
 print(len(data))
+
+# for it in data:
+#     print(len(it[0]),len(it[1]))
+print("缺少实体：",bad)
+print("good实体：",good)
+print(len(anns))
 train_data=data[:c]
 dev_data=data[c:b]
 test_data=data[b:]
@@ -231,6 +280,11 @@ load_pre('../data/data/test.txt',"../output/test.txt")
 save_data(train_data,file="../output/train.txt")
 save_data(dev_data,file="../output/dev.txt")
 save_data(test_data,file="../output/test.txt")
+bad_files=list(set(bad_files))
+for o in bad_files:
+    print(o)
+
+
 
 #一般无需重新生成labels文件
 # save_labels(data,"../data/labels.txt")
