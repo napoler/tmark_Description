@@ -1,0 +1,22 @@
+链式机枪 - 官方中文 Terraria Wiki
+| **此页面的（部分）内容需要被翻译。**  
+---|---  
+      
+    
+    **链式机枪** 是一个困难模式，世纪之花后的枪，而且拥有百分之五十的几率不消耗弹药。但是，像鳄鱼机关枪一样，他的命中率很低，会在一条线上发生很大的偏移。他可能在霜月期间由圣诞坦克 （8.33-12.5%的几率）掉落。
+    
+
+它最好的前缀修饰语是 **神级** 或 **Rapid**.
+
+  * 叶绿弹 很搭配链式机枪, 这弥补了链式机枪命中率的不足。
+  * When forged with the Rapid or Frenzying prefix, the Chain Gun will gain 25% speed. This happens due to rounding down its already insane shooting speed (4 to 3). The Godly prefix is better for players preferring to save ammo, at the cost of less damage. 每秒伤害 for Godly: `DPS=(36+bullet-roundup(def/2))*60/4*1.09`. The 每秒伤害 for Rapid: `DPS=(31+bullet-roundup(def/2))*60/3*1.04`
+  * This weapon may be a good option for damaging enemies very quickly to proc abilities like the Nebula Armor's.
+
+  * The gun appears to be a smaller version of 圣诞坦克's arm.
+  * A Chain Gun with Rapid or Frenzying as a prefix will have a use time of 3, which is the fastest of any ranged weapon in the game. The 太空海豚机枪 does more damage yet fires slightly slower.
+  * The Chain Gun fires 3 more bullets than the S.D.M.G. with no speed 修饰语s.
+  * Due to the way bullet spread works on mobile, the Chain Gun has _no spread_ , making it one of the most powerful guns on mobile to date.
+
+  *[每秒伤害]: 每秒伤害（Damage Per Second）
+
+

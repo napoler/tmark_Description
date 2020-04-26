@@ -1,0 +1,75 @@
+如何提高目的蛋白的可溶性表达 - 实验方法 - 丁香通
+在大肠杆菌 中，当外源蛋白高水平表达的时候，极易形成包涵体，为蛋白纯化 等下游工作带来很大的麻烦。
+
+  
+下面是一些可以参考的有助于提高目的蛋白可溶性表达的实验 方案：
+
+  
+
+**1\. 降低蛋白合成的速度。**
+
+  
+
+可以通过以下方法实现：  
+a. 降低培养温度  
+b. 使用弱启动子  
+c. 使用低拷贝数的质粒 表达载体  
+d. 降低诱导物的浓度
+
+  
+**2\. 改变培养基 。**
+
+  
+a. 培养基中加入可以帮助蛋白折叠的因子  
+b. 加入缓冲液保持pH稳定  
+c. 加入1%的葡萄糖，抑制lac启动子  
+d. 加入山梨糖醇等可以稳定蛋白天然结构的因子  
+e. 加入乙醇， thiols and disulfides等
+
+  
+**3\. 与分子 伴侣或折叠酶共表达。**
+
+  
+常用的分子伴侣有：  
+GroES-GroEL  
+DnaK-DnaJ-GrpE  
+ClpB
+
+  
+常用的折叠酶有：  
+peptidyl prolyl cis/trans isomerases (PPI's)  
+disulfide oxidoreductase (DsbA) and disulfide isomerase (DsbC)  
+protein disulfide isomerase (PDI)
+
+  
+**4\. 分泌表达。使目的蛋白分泌到周质空间。**
+
+  
+
+周质空间的氧化性的环境有利于二硫键的形成，而胞内则是还原性的。  
+周质空间有折叠酶DsbA和DsbC的存在，帮助蛋白正确折叠。  
+周质空间很少有蛋白酶存在，不会被水解。  
+可以使对细胞 有毒性的蛋白大量存在。
+
+  
+**5\. 使用特定的菌株 。**
+
+  
+AD494, which has a mutation in thioredoxin reductase (trxB).  
+Origami ，a double mutant in thioredoxin reductase (trxB) and glutathione
+reductase (gor).
+
+  
+**6\. 与可溶性partner融合表达。**
+
+  
+**7\. 表达目的蛋白的一个片段 。 > 70 kDa的蛋白在大肠杆菌中是很难表达的。**
+
+  
+**8\. 体外去折叠，重新折叠。**
+
+  
+
+(责任编辑：大汉昆仑王)
+
+

@@ -18,6 +18,7 @@ def search_content(keyword):
     s = Search(using=client)
     # s = Search(using=client, index="pet-index").query("match", content="金毛")
     s = Search(using=client, index="pet-index").query(q)
+    s=s[0:100]
     response = s.execute()
     return response
     # for hit in response:
