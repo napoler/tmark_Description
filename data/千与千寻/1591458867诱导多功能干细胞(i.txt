@@ -1,0 +1,112 @@
+诱导多功能干细胞(iPSC)的诞生与前景展望，生物技术世界，千寻学术网
+作者：高胜贤
+
+摘要 自从2006年发现通过转入特定转录因子可使分化细胞重编程,
+iPSC的研究已经得到了极大的发展，人们在诱导方法、应用研究、潜在问题等方面进行了相当深入的探索。然而，到目前依然还有许多问题存在，具体的重编程机制依然不清楚，诱导干细胞与正常细胞的差异也愈加得到关注，其临床应用价值尚需需更多研究论证。
+
+关键词：iPSC；诱导方法；应用前景；问题
+
+The production of induced pluripotent stem cells and Prospects in the
+Application
+
+Abstract Since the 2006, differentiated cells were found that they can be
+reprogrammed after transferred certain transcription factors , research in
+iPSC has been tremendously developed in the method of induction, application,
+and the potential problems. However, many problems still exist, reprogramming
+mechanism is still not clear, differences between iPS and normal cells are
+catching more attention, and its clinical value in the future is still needed
+to study with more feasibility analysis.
+
+Key words : pluripotent stem cells; induction methods ;clinical value;
+problems
+
+胚胎干细胞（ESC）具有自我复制并分化为人体各种功能细胞的潜能,其独特生物学特性使其被广泛应用于生物学研究的各个领域，同时，它潜在的医学价值也成为当前的研究热点。但是ESC源于植入前的早期胚胎，hESC自诞生之日便倍受争议，其伦理问题及来源限制了相关研究及干细胞治疗的发展。近年来兴起的iPSC有希望替代ESC，iPSC具有和ESC类似的功能，却绕开了ESC研究一直面临的伦理和法律等方面的障碍，因此应用前景很广阔。1
+
+iPSC的诞生与发展
+
+2006年，日本学者山中申弥将转录因子Oct3/4, Sox2, c-Myc,
+Klf4一起转入小鼠成纤维细胞，使其重编程而得到了一种类似ESC的细胞，即诱导多功能干细胞（iPSC）。此前，通过核移植或与ESC融合可使分化细胞获得干细胞特性，但是具体作用因子了解很少，山中伸弥通过筛选将这些因子确定为Oct3/4,
+Sox2, c-Myc与 Klf4。后来，他们又将人皮肤成纤维细胞转变为iPSC。2与此同时，詹姆斯·汤姆森等证明OCT4 , SOX2 , NANOG 与
+LIN28 也可将人体细胞改造为iPSC。3
+
+研究发现，很多细胞能被诱导为iPSC。例如神经干细胞内源性表达Sox2, c-Myc和
+Klf4，所以只外源表达Oct4就可将其诱导成iPSC。人们发现成纤维细胞、胃黏膜上皮细胞和肝细胞、甚至角质化细胞都可诱导为iPSC。2009年，周琦等利用四倍体互补实验成功证明了iPSC具有发育全能性。4c-Myc是著名的原癌基因，所以山中伸弥改进实验手段后，没有c-
+myc也诱导出iPSC,
+嵌合体小鼠在研究期间没有形成肿瘤。但是病毒载体整合也可能诱发肿瘤，接下来的研究发现载体不整合进基因组也可诱导iPSC,从而为iPSC的应用奠定了基础。52009年，俞君英等利用非整合型附着体载体方法获得了人类的iPSC，在去掉附着体后，这些细胞就成为了没有外源DNA的iPSC，从而解决了原来利用病毒载体或转进原癌基因可能癌变的危险。6
+
+尽管前景诱人，iPSC一开始还面临诱导效率低的问题，添加新基因等方法副作用大。因此，提高iPSC诱导和安全性正成为研究重点。目前，诱导方法趋向于表达特异的miRNA。7在未分化的ESC中，仅有少数几种miRNAs
+高表达，鼠胚干细胞中为 miR-292 和miR-302 家族，人胚干细胞中为 miR-371 和miR-302
+家族。人们已经发现在小鼠或人的体细胞中表达miR302/367可快速有效地将其诱导为iPSC。此方法获得的iPSC表达干细胞特异蛋白、形成畸胎瘤，并且可生出嵌合体小鼠。8
+
+iPSC的应用价值
+
+2009年，美国批准了第一例临床ESC治疗脊髓损伤,但是ESC治疗依然有两大困难：移植后可能会产生免疫排斥、胚胎的伦理问题。iPSC却基本没有这些问题。iPSC可能会替代ESC，而在细胞治疗中发挥巨大作用。Rudolf
+Jaenisch等将镰状细胞性贫血小鼠皮肤细胞重编程为iPSC，诱导为造血祖细胞后移回小鼠，贫血症得到有效恢复。9
+iPSC诱导分化成的神经元前体细胞，可产生神经元细胞与神经胶质细胞。把这些细胞移植入胎鼠的脑内，细胞迁移至大脑的不同区域，分化为神经元细胞与神经胶质细胞并能够发挥功能。将诱导分化成的中脑多巴胺神经元移植到患有帕金森的成年鼠脑中，提高了小鼠的运动能力。
+
+iPSC在疾病研究与药物开发中也具有重要价值。从患者获得的iPSC可产生大量受该疾病影响的细胞，然后这些细胞可用于疾病模型、药物研发。永生细胞株是医学研究的宝贵资源，以前局限在一些癌细胞系或转化的组织细胞。若将遗传病患者体细胞重编程为iPSC后获得永久分裂能力，然后诱导为各种组织，这就为体外研究病理组织的形成提供了条件，从而促进疾病研究与药物研发。
+
+存在的问题
+
+iPSC前景看似广阔，但临床应用尚存在大量困难。例如，少量iPSC或ESC进入机体就可形成畸胎瘤,所以诱导分化必须彻底。10此外，重编程的机制尚不清楚，研究者仍在寻找更适诱导方法与供体细胞，临床应用的安全性仍待更多研究论证。
+
+iPSC与ESC在分子水平与功能上是否等同尚存争论。研究发现二者确实存在差异，这些差异所带来的问题依然模糊。重编程与细胞扩增过程会导致染色体、亚染色体、单碱基层面各种异常积累。11对iPSCs,
+ESCs,体细胞进行甲基化分析发现了显著的差异，某些差异甚至在分化后持续存在。甲基化分析结果表明iPSC与ESC似乎有着本质区别。12Core等发现iPSC的突变富集于癌症相关基因中，这些突变部分来源于重编程之前，部分发生在重编程过程中或之后。所以,实际应用中iPSC除了需要在表观遗传层面进行修饰，遗传基因也要进行改造。13
+iPSC潜在的致瘤性也是一直关注的问题。抑制p53–p21通路可提高iPSC的产生效率。
+14研究发现在iPSC中Ink4/Arf基因簇的表达完全被抑制了，而Arf
+可激活p53,p21而成为重编程的障碍。15体细胞获得不死性是重编程的重要限速步骤，这表明iPSC与肿瘤发生、细胞转化具有相似性。16
+
+遗传安全是
+iPSC应用的前提。iPSC研究和应用的前提不仅是具有无限增殖的能力和多向分化的潜能,而且在诱导、增殖和分化过程中都必须保持正常且稳定的遗传学和表观遗传学组成。为了实现iPSC的应用价值，如何修复iPSC在重编程后存在的遗传缺陷，或发现更优的诱导方法应该会成为今后研究的关键。
+
+References:
+
+1 Takahashi, K. and Yamanaka, S., Induction of pluripotent stem cells from
+mouse embryonic and adult fibroblast cultures by defined factors. Cell 126
+(4), 663 (2006).
+
+2 Takahashi, K. et al., Induction of pluripotent stem cells from adult human
+fibroblasts by defined factors. Cell 131 (5), 861 (2007).
+
+3 Yu, J. et al., Induced pluripotent stem cell lines derived from human
+somatic cells. Science 318 (5858), 1917 (2007).
+
+4 Zhao, X. Y. et al., iPS cells produce viable mice through tetraploid
+complementation. Nature 461 (7260), 86 (2009).
+
+5 Okita, K. et al., Generation of mouse induced pluripotent stem cells without
+viral vectors. Science 322 (5903), 949 (2008).
+
+6 Yu, J. et al., Human induced pluripotent stem cells free of vector and
+transgene sequences. Science 324 (5928), 797 (2009).
+
+7 Onder, T. T. and Daley, G. Q., microRNAs become macro players in somatic
+cell reprogramming. Genome Med 3 (6), 40 (2011).
+
+8 Morrisey, Edward E., Highly Efﬁcient miRNA-Mediated Reprogramming of Mouse
+and Human Somatic Cells to Pluripotency. cell stem cell (8), 376 (2011).
+
+9 Hanna, J. et al., Treatment of sickle cell anemia mouse model with iPS cells
+generated from autologous skin. Science 318 (5858), 1920 (2007).
+
+10 Yamanaka, S., A fresh look at iPS cells. Cell 137 (1), 13 (2009).
+
+11 Pera, M. F., Stem cells: The dark side of induced pluripotency. Nature 471
+(7336), 46 (2011).
+
+12 Lister, R. et al., Hotspots of aberrant epigenomic reprogramming in human
+induced pluripotent stem cells. Nature 471 (7336), 68 (2011).
+
+13 Gore, A. et al., Somatic coding mutations in human induced pluripotent stem
+cells. Nature 471 (7336), 63 (2011).
+
+14 Hong, H. et al., Suppression of induced pluripotent stem cell generation by
+the p53-p21 pathway. Nature 460 (7259), 1132 (2009).
+
+15 Li, H. et al., The Ink4/Arf locus is a barrier for iPS cell reprogramming.
+Nature 460 (7259), 1136 (2009).
+
+16 Utikal, J. et al., Immortalization eliminates a roadblock during cellular
+reprogramming into iPS cells. Nature 460 (7259), 1145 (2009).
+
+

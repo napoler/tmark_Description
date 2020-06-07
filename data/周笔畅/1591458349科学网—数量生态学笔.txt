@@ -1,0 +1,289 @@
+科学网—数量生态学笔记||数据探索 - 周运来的博文
+上节课数量生态学笔记||绪论我们简单了解《数量生态学》的基本内容，特别介绍了书中用到的数据集Doubs、甲螨数据集。关于R并未做过多的介绍，因为这是一本生态学的书。但是关于学习方法我推荐一种
+**卡片学习法** ：
+
+将知识点整理在一个小的可用随身携带的卡片上，可以随时翻阅，可以建立链接。也就是学习就像拼图，在整理、记忆、链接中形成自己的知识树。
+
+上节课的卡片其实就是开始的那张导图，我鼓励制作自己的学习卡片（手写）。可以包括生态学知识点，R函数，并不是为了记忆而是为了联系。没用存量谈不上体系。
+
+今天我们来学习书中的第二章：探索性数据分析。
+
+在我们提到数据分析的时候还脑海里闪现的往往是简洁的报表、漂亮的数据图，再不济也会联想到假设检验（Hypothesis
+Testing）和建模（modeliling）。然而，数据采集完之后，数据表整理好之后，我要做的第一步并不是去做复杂的统计分析。而是要做一些统计来了解数据的概况，对数据有一个大致的认识。用这认识去指导我们后面的分析实践，这就是数据探索。如SPSS中就有一个菜单叫做
+**描述统计** 。本章基本上也是属于这个范畴。
+
+###### 数据概况
+
+首先我们载入数据：
+
+    
+    
+    rm(list=ls())
+    setwd("D:\\Users\\Administrator\\Desktop\\RStudio\\数量生态学\\Run")
+    
+    #导入物种多度数据
+    spe<-read.csv("../DATA/DoubsSpe.csv",row.names = 1)
+    str(spe)
+    #导入环境数据
+    env<-read.csv("../DATA/DoubsEnv.csv",row.names = 1)
+    #导入空间坐标数据
+    spa<-read.csv("../DATA/DoubsSpa.csv",row.names = 1)
+
+我们对物种群落数据做一个简单的描述统计，同时也是看看我们的和数据格式是否正常。
+
+    
+    
+    # 基础函数
+    # ********
+    spe    #在控制台显示整个数据框的内容，但对于大样本的数据框
+    #并不建议直接显示
+    spe[1:5,1:10]       #只展示前5行和前10列
+    head(spe)            #只展示前几行
+    nrow(spe)            #提取数据框总行数
+    ncol(spe)            #提取数据框总列数
+    dim(spe)            #提取数据框的维度（显示数据框多少行，多少列）
+    colnames(spe)        #提取列名，在这里是物种名
+    rownames(spe)        #提取行名，在这里一行代表一个样方
+    summary(spe)         #以列为单位，对列变量进行描述性统计
+    #比较多度的中位值和平均值。大部分是对称分布吗？
+
+  
+如果多度分布是对称的，中位数应该和平均值差别不大。大家看这里的数据，显然多数数据并不是对称的。
+
+    
+    
+    # 多度数据总体分布情况
+    # *******************
+    # 整个多度数据值的范围
+    range(spe)
+    # 计算每种多度值的数量
+    ab <- table(unlist(spe))
+    ab
+    # 所有种混和在一起的多度分布柱状图
+    barplot(ab, las=1, xlab="多度等级", ylab="频度", col=gray(5:0/5))
+    # 多度数据中0值的数量
+    sum(spe==0)
+    # 多度数据中0值所占比例
+    sum(spe==0) / (nrow(spe)*ncol(spe))
+    #请观察多度频率分布柱状图，如何解读为什么0值（缺失）在数据框内频
+    #率这么高?
+
+其实造成缺失的因素有很多，但是有两种需要我们的注意：
+
+  * 真实的环境适合这个物种生存，只是我们采样的时候没采到（比如人家冬眠了，出去玩了，尚未迁徙到这里）。
+  * 真实的环境不适合这个物种生存，在这里生存就会被淘汰。
+
+所以对于零值我们要小心处理，关键还是理解数据的生物学意义。
+
+###### 样方的分布
+
+数据探索也是也个数据和模型相互磨合的过程，不仅看用来描述我们实验本身的数据，也可以用来描述实验设计。
+
+    
+    
+     样方位置地图
+    # **************
+    # 生成空的绘图窗口（横纵坐标轴比例1:1，带标题）
+    # 从spa数据框获取地理坐标x和y
+    plot(spa, asp=1, type="n", main="样方位置",
+         xlab="x坐标 (km)", ylab="y坐标 (km)")
+    # 加一条连接各个样方点的蓝色线（代表Doubs河）
+    lines(spa, col="light blue")
+    # 添加每个样方的编号
+    text(spa, row.names(spa), cex=0.8, col="red")
+    # 添加文本
+    text(70, 10, "上游", cex=1.2, col="red")
+    text(20, 120, "下游", cex=1.2, col="red")
+
+30g个样方沿着Doubs河的空间分布。绘制这幅图用到的plot函数是R的基础绘图函数。可以?plot()查看其帮助文档，asp是用来调整绘图版面的长宽比列的。  
+
+下面我们把物种数据映射到采样点之上，看看物种是怎样随着河流变化的。
+
+    
+    
+    #某些鱼类的分布地图
+    # ******************
+    # 将绘图窗口分割为4个绘图区域，每行两个
+    par(mfrow=c(2,2))
+    plot(spa, asp=1, col="brown", cex=spe$TRU, main="褐鳟",
+         xlab="x坐标 (km)", ylab="y坐标 (km)")
+    lines(spa, col="light blue")
+    plot(spa, asp=1, col="brown", cex=spe$OMB, main="茴鱼",
+         xlab="x坐标 (km)", ylab="y坐标 (km)")
+    lines(spa, col="light blue")
+    plot(spa, asp=1, col="brown", cex=spe$BAR, main="鲃鱼",
+         xlab="x坐标 (km)", ylab="y坐标 (km)")
+    lines(spa, col="light blue")
+    plot(spa, asp=1, col="brown", cex=spe$BCO, main="欧鳊",
+         xlab="x坐标 (km)", ylab="y坐标 (km)")
+    lines(spa, col="light blue")
+    #观察所生成的4张图，你就会明白为什么Verneaux 选择这4种鱼类作为不同区域的生态指示种，看了后面将要展示的环境因子空间分布情况会更清楚。
+
+从这个图上我们清楚地看到，褐鳟、茴鱼、鲃鱼、欧鳊的多度是沿着Doubs河从上游到下游分布的，也就明白为什么Verneaux
+选择这4种鱼类作为不同区域的生态指示种。注意之前提到的零值问题，这里是同一条河流不会有迁移的障碍，这几种鱼的生活史也较接近不存在有冬眠的不一致的情况。
+
+另一个引起我们注意的就是plot()函数的参数cex的用法，它的作用是定义数据点标识的大小。提问，为什么这个标识是圆形的而不是其他的呢？可以调吗？
+
+每个物种在多少样方中出现？，我们可以看看物种的相对频度。
+
+    
+    
+    # 比较物种频度
+    # **************
+    # 计算每个物种出现的样方数
+    #按列进行计数，因此函数apply()第二个参数MARGIN应该设定为2
+    spe.pres <- apply(spe > 0, 2, sum)
+    # 按照升序的方式重新排列结果
+    sort(spe.pres)
+    # 计算频度百分比
+    spe.relf <- 100*spe.pres/nrow(spe)
+    round(sort(spe.relf), 1)    # 设置排列结果为1位小数
+    #绘柱状图
+    par(mfrow=c(1,2))        # 将绘图窗口垂直一分为二
+    hist(spe.pres, main="物种出现数", right=FALSE, las=1,
+         xlab="出现数", ylab="物种数量",
+         breaks=seq(0,30,by=5), col="bisque")
+    hist(spe.relf, main="物种相对频度", right=FALSE, las=1,
+         xlab="出现率(%)", ylab="物种数量",
+         breaks=seq(0, 100, by=10), col="bisque")
+
+我问，这两个图的纵轴都是“物种数量”为什么最大值还不一样呢？频度图让我们了解每个物种存在于多少个样方内。接下来我们看看每个样方内存在多少物种（物种的丰度）。思考频度与丰度的差异。主义apply函数的应用，apply函数家族在R中应用很普遍。
+
+    
+    
+    # 样方比较：物种丰富度
+    # ********************
+    # 计算每个样方内物种数
+    # 以行汇总，apply()函数第二个参数MARGIN应该设定为1
+    sit.pres <- apply(spe > 0, 1, sum)
+    #按照升序的方式重新排列结果
+    sort(sit.pres)
+    par(mfrow=c(1,2))    #将绘图窗口垂直一分为二
+    # 绘制样方沿着河流的分布位置和所含物种丰富度
+    plot(sit.pres,type="s", las=1, col="gray",
+         main="物种丰富度-上下游的梯度",
+         xlab="样方沿着河流的位置", ylab="物种丰富度")
+    text(sit.pres, row.names(spe), cex=.8, col="red")
+    # 使用地理坐标绘制气泡地图
+    plot(spa, asp=1, main="物种丰富度地图", pch=21, col="white",
+         bg="brown", cex=5*sit.pres/max(sit.pres), xlab="x坐标 (km)",
+         ylab="y坐标 (km)")
+    lines(spa, col="light blue")
+    #你能否辨析沿着河流哪里是物种丰富度的热点地区？
+
+我们可以清楚地看出沿河流物种的整体分布。
+
+最后我们用vegan包中的diversity()函数计算生物多样性指数。
+
+    
+    
+    #计算生物多样性指数
+    # *****************
+    # 载入所需要的vegan程序包
+    library(vegan) # 如果未载入，需要执行这一步
+    #访问diversity() 帮助界面
+    ?diversity
+    N0 <- rowSums(spe > 0)               #物种丰富度
+    H <- diversity(spe)                    # Shannon熵指数
+    N1 <- exp(H)                        # Shannon 多样性指数
+    N2 <- diversity(spe, "inv")              # Simpson多样性指数
+    J <- H/log(N0)                          # Pielou 均匀度
+    E1 <- N1/N0                            # Shannon均匀度 (Hill比率)
+    E2 <- N2/N0                            # Simpson均匀度 (Hill比率)
+    div <- data.frame(N0, H, N1, N2, E1, E2, J)
+    div
+
+大家看到在计算的结果中，第8个样方几个指数出现了inf看看原始数据spe的第8个样方有什么规律，说出为什么会出现INF。
+
+###### 环境数据
+
+现在我们已经对物种数据有了基本的了解，下面我们看一下环境数据。
+
+    
+    
+    # 部分环境变量的气泡地图
+    # *******************************************
+    par(mfrow=c(2,2))
+    plot(spa, asp=1, main="海拔", pch=21, col="white", bg="red",
+         cex=5*env$alt/max(env$alt), xlab="x", ylab="y")
+    lines(spa, col="light blue")
+    plot(spa, asp=1, main="流量", pch=21, col="white", bg="blue",
+         cex=5*env$deb/max(env$deb), xlab="x", ylab="y")
+    lines(spa, col="light blue")
+    plot(spa, asp=1, main="氧含量", pch=21, col="white", bg="green3",
+         cex=5*env$oxy/max(env$oxy), xlab="x", ylab="y")
+    lines(spa, col="light blue")
+    plot(spa, asp=1, main="硝酸盐浓度", pch=21, col="white", bg="brown",
+         cex=5*env$nit/max(env$nit), xlab="x", ylab="y")
+    lines(spa, col="light blue")
+    #哪幅图最能展示上下游的梯度？如何解释其他环境变量的空间分布格局？
+
+我们可以说是海拔反映了环境变量的梯度。流量和海拔都好解释，想一下含氧量和硝酸盐浓度只靠这几张图能解释吗？在（150,200）处的硝酸盐浓度很高而氧含量很低，为什么？
+
+环境变量量沿河流分布情况。
+
+    
+    
+    #线条图
+    # *****
+    par(mfrow=c(2,2))
+    plot(env$das, env$alt, type="l", xlab="离源头距离 (km)",
+         ylab="海拔 (m)", col="red", main="海拔")
+    plot(env$das, env$deb, type="l", xlab="离源头距离 (km)",
+         ylab="流量 (m3/s)", col="blue", main="流量")
+    plot(env$das, env$oxy, type="l", xlab="离源头距离 (km)",
+         ylab="氧含量 (mg/L)", col="green3", main="氧含量")
+    plot(env$das, env$nit, type="l", xlab="离源头距离 (km)",
+         ylab="硝酸盐浓度 (mg/L)", col="brown", main="硝酸盐浓度")
+
+如果要了解任意任意两个环境变量之间的关系，我们可以使用强大的矩阵散点图绘制函数pairs().
+
+    
+    
+    # 所有变量对之间的二维散点图
+    # **************************
+    #载入自编的函数R脚本
+    source("panelutils.R")  # panelutils.R脚本文件必须与当前R工作空间在同一文件
+    #夹下
+    # 带频度分布的柱状图和光滑拟合曲线的双变量散点图
+    op <- par(mfrow=c(1,1), pty="s")
+    pairs(env, panel=panel.smooth, diag.panel=panel.hist,
+          main="双变量散点图（带频度分布图和平滑曲线）")
+    par(op)
+    #从柱状图能否看出哪些变量符合正态分布？
+    #需要注意的是，对于回归分析和典范排序，并没有要求解释变量符合正态
+    #分布。是否有很多散点图显示出变量之间的线性关系或至少是单调关系？
+
+简单的转化可以改善某些变量的数据分布，另外变量之间的刚量不同很多分析要将其标准化。
+
+    
+    
+    # 某个环境变量简单转化
+    # ********************
+    range(env$pen)
+    # 坡度变量对数转化(y = ln(x))
+    # 比较转化前后数值的柱状图和箱线图
+    par(mfrow=c(2,2))
+    hist(env$pen, col="bisque", right=FALSE, main="坡度频度分布图",ylab="频度",xlab="坡度")
+    hist(log(env$pen), col="light green", right=F, main="对数化坡度频度分布图",ylab="频度",xlab="对数化坡度")
+    boxplot(env$pen, col="bisque", main="坡度箱线图", ylab="坡度")
+    boxplot(log(env$pen), col="light green", main="对数化坡度箱线图",
+            ylab="对数化坡度")
+    
+    
+    # 所有环境变量的标准化
+    # *********************
+    # 中心化和标准化=标准化变量 (z-scores)
+    env.z <- decostand(env, "standardize")
+    apply(env.z, 2, mean)    # 平均值 = 0
+    apply(env.z, 2, sd)        # 标准差 = 1
+    # 使用scale()函数也可以运行相同的标准化(输出的是矩阵)
+    env.z <- as.data.frame(scale(env))
+
+探索性数据分析|百科  
+卡片学习法  
+学习卡片大法
+
+​
+
+
