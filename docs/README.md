@@ -75,3 +75,7 @@ print(word,pall)
 https://www.terrychan.org/transformers-SentenceSimilarity/
 
 
+
+[By Terry Chan](https://www.terrychan.org)
+
+
