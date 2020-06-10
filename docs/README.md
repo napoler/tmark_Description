@@ -42,9 +42,11 @@ search_to_txt.py
 基础模型
 chinese_wwm_ext_pytorch
 
+描述训练
 https://www.kaggle.com/terrychanorg/bert-tmark-description
 
-
+ner训练
+https://www.kaggle.com/napoler/bert-ner-tmark
 
 ## 使用模型
 使用bert微调提取实体，描述这些信息。
@@ -74,6 +76,9 @@ print(word,pall)
 详情可以访问这个链接：
 https://www.terrychan.org/transformers-SentenceSimilarity/
 
+## 其他
+
+不得不说Bert真是好用，就是资源有点浪费啊！
 
 
 [By Terry Chan](https://www.terrychan.org)
