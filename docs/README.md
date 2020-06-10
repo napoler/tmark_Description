@@ -54,7 +54,7 @@ https://www.kaggle.com/napoler/bert-ner-tmark
 
 https://www.kaggle.com/terrychanorg/tmarkdescriptionmodel
 
-![alt text](ner_train/static/pre_test.png "效果测试")
+![alt text](https://raw.githubusercontent.com/napoler/tmark_Description/master/ner_train/static/pre_test.png "效果测试")
 
 
 
