@@ -4,6 +4,9 @@
 #标注工具
 https://github.com/t-web/ChineseAnnotator
 
+更多使用帮助
+https://www.terrychan.org/tmark_Description/
+
 
 
 

@@ -4,6 +4,8 @@
 ## 标注工具
 https://github.com/t-web/ChineseAnnotator
 
+
+
 ## 标注工具Ai_bert
 https://github.com/t-web/ChineseAnnotator/tree/Ai_bert
 加入了自动提取实体和描述
@@ -35,6 +37,10 @@ tools目录下执行下面命令自动搜索文章
 search_to_txt.py
 ```
 
+
+## Kaggle上训练
+
+https://www.kaggle.com/terrychanorg/bert-tmark-description
 
 
 
