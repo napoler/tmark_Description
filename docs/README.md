@@ -39,8 +39,39 @@ search_to_txt.py
 
 
 ## Kaggle上训练
+基础模型
+chinese_wwm_ext_pytorch
 
 https://www.kaggle.com/terrychanorg/bert-tmark-description
 
+
+
+## 使用模型
+使用bert微调提取实体，描述这些信息。
+```
+pip install tkitMarker_bert
+```
+测试
+```
+from tkitMarker_bert import Marker
+
+text="柯基犬是一个小短腿"
+word="柯基犬"
+#加载预测描述
+pred=Marker(model_path="./model")
+model,tokenizer=pred.load_model()
+pall=pred.pre(word,text,model,tokenizer)
+print(word,pall)
+>>>柯基犬 ['是一个小短腿']
+
+```
+
+
+## 解决重复
+
+从文本中提取的描述信息，会出现很多不同的表述，对于这种情况，对相似的内容进行合并是非常有必要的。
+个人还是用到的bert模型，微调的同义句判断模型来解决的。
+详情可以访问这个链接：
+https://www.terrychan.org/transformers-SentenceSimilarity/
 
 
