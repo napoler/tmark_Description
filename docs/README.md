@@ -32,7 +32,8 @@ https://www.kaggle.com/terrychanorg/tmark-description
 ## 添加文章
 tools目录下执行下面命令自动搜索文章
 （此命令不适合所有人，是基于本地数据的搜索，没有共享大家可以放弃这个步骤）
-
+数据使用elasticsearch作为搜索
+不一定适合所有人
 ```
 search_to_txt.py
 ```
@@ -47,6 +48,15 @@ https://www.kaggle.com/terrychanorg/bert-tmark-description
 
 ner训练
 https://www.kaggle.com/napoler/bert-ner-tmark
+
+## 模型下载
+标记精力和算力都有限，可以用来测试
+
+https://www.kaggle.com/terrychanorg/tmarkdescriptionmodel
+
+![alt text](https://github.com/napoler/tmark_Description/blob/master/ner_train/static/pre_test.png "效果测试")
+
+
 
 ## 使用模型
 使用bert微调提取实体，描述这些信息。
@@ -68,6 +78,9 @@ print(word,pall)
 
 ```
 
+## 后续使用
+上面产生的数据后续可以使用knn或者聚类等等进行聚合内容。
+应该可以把各种有效元素进行聚合分类。
 
 ## 解决重复
 
