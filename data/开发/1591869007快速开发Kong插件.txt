@@ -1,0 +1,184 @@
+快速开发Kong插件 - 简书
+详细的开发文档：https://docs.konghq.com/2.0.x/plugin-development/
+
+## 一、背景
+
+今天我们来快速开发一个kong插件，插件的功能是可以把Request的变量以header的形式传递到服务端和客户端。
+
+## 二、安装Kong
+
+CentOS系统可以使用下面的命令来完成安装
+
+    
+    
+    sudo yum install -y wget
+    wget https://bintray.com/kong/kong-rpm/rpm -O bintray-kong-kong-rpm.repo
+    export major_version=`grep -oE '[0-9]+\.[0-9]+' /etc/redhat-release | cut -d "." -f1`
+    sed -i -e 's/baseurl.*/&\/centos\/'$major_version''/ bintray-kong-kong-rpm.repo
+    sudo mv bintray-kong-kong-rpm.repo /etc/yum.repos.d/
+    sudo yum install -y kong
+    
+
+## 三 启动Kong
+
+  1. 创建配置文件
+
+    
+    
+    cp /etc/kong/kong.conf.default /etc/kong/kong.conf
+    
+
+  2. 修改配置文件`/etc/kong/kong.conf`
+
+    
+    
+    database = off
+    
+
+  3. 启动kong
+
+    
+    
+    kong start
+    
+
+  4. 查看默认配置
+
+如果访问成功，代表kong已经成功运行
+
+    
+    
+    curl http://127.0.0.1:8001/config
+    
+
+## 四、开发插件
+
+  1. 进入到kong的插件目录`/usr/local/share/lua/5.1/kong/plugins`，创建两个lua文件
+
+    
+    
+    cd /usr/local/share/lua/5.1/kong/plugins
+    mkdir debug
+    cd debug
+    
+    cat > schema.lua <<EOF
+    local typedefs = require "kong.db.schema.typedefs"
+    
+    
+    return {
+      name = "debug",
+      fields = {
+        { protocols = typedefs.protocols_http },
+        { config = {
+            type = "record",
+            fields = {
+              { header_name = { type = "string", default = "X-Kong-Debug" }, },
+              { echo_downstream = { type = "boolean", default = false, }, },
+            },
+          },
+        },
+      },
+    }
+    EOF
+    
+    cat > handler.lua <<EOF
+    local BasePlugin = require "kong.plugins.base_plugin"
+    
+    local DebugHandler = {}
+    
+    DebugHandler.PRIORITY = 6
+    DebugHandler.VERSION = "2.0.0"
+    
+    
+    function DebugHandler:access(conf)
+      local debug_info = "http:" .. kong.request.get_http_version() .. ", method:" .. kong.request.get_method()
+      kong.service.request.set_header(conf.header_name, debug_info)
+    
+      if conf.echo_downstream then
+        -- For later use, to echo it back downstream
+        kong.ctx.plugin.debug_info = debug_info
+      end
+    end
+    
+    
+    function DebugHandler:header_filter(conf)
+      if not conf.echo_downstream then
+        return
+      end
+    
+      local debug_info = kong.ctx.plugin.debug_info
+      if debug_info then
+        kong.response.set_header(conf.header_name, debug_info)
+      end
+    end
+    
+    
+    return DebugHandler
+    EOF
+    
+    cd -
+    
+
+  2. 自动加载插件，修改配置文件`/etc/kong/kong.conf`
+
+    
+    
+    plugins = bundled,debug
+    
+
+  3. 重新启动kong
+
+    
+    
+    kong restart
+    
+
+  4. 修改apis.yaml,配置插件
+
+    
+    
+    cd
+    
+    cat > apis.yml <<EOF
+    _format_version: "1.1"
+    services:
+     - name: httpbin-service
+       url: http://httpbin.org/
+       # Entities can store tags as metadata
+       tags:
+       - httpbin
+       # Entities that have a foreign-key relationship can be nested:
+       routes:
+       - name: httpbin-route
+         paths:
+         - /
+       plugins:
+       - name: debug
+         config:
+           header_name: X-Kong-Debug
+           echo_downstream: true
+    EOF
+    
+
+  5. 检测配置文件是否合法
+
+    
+    
+    kong config parse apis.yml
+    
+
+  6. 上传配置文件
+
+    
+    
+    curl http://127.0.0.1:8001/config -F "config=@apis.yml"
+    
+
+  7. 测试接口
+
+    
+    
+    curl -v http://127.0.0.1:8000/anything
+    
+
+

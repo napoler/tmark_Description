@@ -1,0 +1,167 @@
+白鹭引擎开发H5游戏（项目结构）_网络_游戏开发实验室-CSDN博客
+孙广东 2016.12.8
+
+http://blog.csdn.net/u010019717  
+
+主要使用 EgretWing （是白鹭扩展的 VisualStudio Code）
+
+新建 项目中 选择
+
+生成的项目的结构：
+
+src
+
+|
+
+是TypeScript源码目录  
+  
+---|---  
+  
+resource
+
+|
+
+是我们项目中的资源路径，一般我们把图片音频等素材放置asset目录下，json等配置文件放置config目录下，default.res.json是我们用于加载资源的json配置文件，一般不修改名字，后面会讲到怎么使用。  
+  
+egretProperties
+
+|
+
+是我们这个项目的一些配置记录信息，一般我们不需要动它。而index.html就是我们游戏的主界面文件。  
+  
+index.html
+
+|
+
+我们可以看到游戏界面所需的js，都自动生成并引用好了。这一部分我们不需要也不能手动去修改。  
+  
+bin-debug
+
+|
+
+是调试环境编译出来的js  
+  
+libs
+
+|
+
+是文件包的引用目录  
+  
+template
+
+|
+
+主要是app用到的runtime  
+  
+但是你可以在style标签中修改背景色或者在div属性值中修改配置参数，如渲染的帧率（一般我们设成60，如果是计算量大的，我们再适当降低），在这里我们可以重新修改刚刚新建游戏时的适配模式、宽高、旋转等；
+
+将data-show-fps和data-show-log设成true，我们就可以看到游戏运行的实时帧率了。
+
+帧率可以检测游戏运行的流畅度（性能），渲染数量越多，同时计算量越大，性能就越差，掉帧就越多。所以帧率越高，则表示性能越好，流畅度高。
+
+egret.runEgret({})的运行方法，在这里，你可以修改egret的渲染模式，默认是"webgl"。但是如果你需要用到跨域图片资源或者有大量的图片和文字，你最好还是使用"canvas"模式，避免跨域报错和性能问题。
+
+主要 熟悉 visualstudio code 就可以很容易上手。 点击 调试 菜单 按键或者 F5 就可以运行了。 运行窗口中 也有 切花分辨率 和
+横竖屏切换等！
+
+1、首先要知道入口类：
+
+在index.html页面中声明了入口类（data-entry-class），所以当页面加载完之后，就会自动执行Main类中的构造函数。
+
+并且在这个类构建完成后，会自动添加到舞台（stage）。
+
+2、由于Main继承自白鹭的基本容器egret.DisplayObjectContainer并且会自动添加到舞台中，所以在初始化阶段给Main绑定了添加到舞台事件，用于启动界面。
+
+public constructor() {
+
+super();
+
+this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage,this);
+
+}
+
+3、Main被添加到舞台，触发旗下的onAddToStage方法。
+
+运行 开到的应该是两个界面 一个 Loading 和 Main , 只不过 Loading 太快了。
+
+    
+    
+        private onAddToStage(event:egret.Event) {
+            //设置加载进度界面
+            //Config to load process interface
+            this.loadingView = new LoadingUI();
+            this.stage.addChild(this.loadingView);
+
+4、 加载配置文件， 加载完成后，执行onConfigComplete方法
+
+移除CONFIG_COMPLETE配置完成事件，分别绑定资源组加载完成（GROUP_COMPLETE）执行的方法、
+
+资源组加载出错（GROUP_LOAD_ERROR）、资源文件加载进度（GROUP_PROGRESS）要执行的方法、资源项加载出错（ITEM_LOAD_ERROR）要执行的方法。接着正式开始执行RES.loadGroup（）并加载资源组（默认preload）里面的资源。
+
+    
+    
+        privateonConfigComplete(event:RES.ResourceEvent):void {
+           RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE,this.onConfigComplete, this);
+           RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.onResourceLoadComplete, this);
+           RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR,this.onResourceLoadError, this);
+           RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.onResourceProgress, this);
+           RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR,this.onItemLoadError, this);
+            RES.loadGroup("preload");
+        }
+
+5、正在加载资源，触发RES.ResourceEvent.GROUP_PROGRESS并执行onResourceProgress方法
+
+在这个过程中，会不断地调用LoadingUI中的公共方法setProgress(event.itemsLoaded,event.itemsTotal);
+
+GROUP_PROGRESS事件会返回当前已加载的数量event.itemsLoaded，以及加载资源的总数event.itemsTotal，我们可以利用这两个数值进行一些进度的显示。
+
+6、资源组加载完成，触发RES.ResourceEvent.GROUP_COMPLETE并执行onResourceLoadComplete方法
+
+将loading页面移出舞台，移除之前绑定的一些加载事件，并且执行createGameScene()方法。
+
+7、开始绘制游戏场景
+
+createGameScene() 函数。
+
+# 可视化编程
+
+毕竟是国人的工具， 文档都是中文
+
+http://edn.egret.com/cn/docs/page/1027
+
+http://edn.egret.com/cn/docs/page/936
+
+实战教程：（必看）
+
+http://bbs.egret.com/thread-1878-1-1.html
+
+创建项目选择 EUI 项目：
+
+创建可视化 界面
+
+Exml 被绑定到 Ts 文件中 使用。 （注意名字不要一样！）
+
+本身就是XML
+
+不足的地方有很多， 创建的时候 应该自动生成 *.Exml 和 *.ts 才好 ，并且绑定关系自动生成！。 还有 在界面上可以指定 事件才好，
+或者双击的时候跳转到 *.ts 的事件处理位置上。
+
+  
+
+资源编辑器
+
+来自 <http://developer.egret.com/cn/github/egret-
+docs/Wing/editor/resdepot/index.html>
+
+将资源分组 ， 设置九宫格 等
+
+EXML可视化编辑器
+
+来自 <http://developer.egret.com/cn/github/egret-
+docs/Wing/editor/exml/index.html>
+
+  
+
+  
+
+

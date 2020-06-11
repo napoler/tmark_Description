@@ -1,0 +1,48 @@
+  钢铁企业生态效率分析
+|  
+---  
+钢铁企业生态效率分析  
+戴铁军;陆钟武;  
+东北大学国家环境保护生态工业重点实验室;东北大学国家环境保护生态工业重点实验室 辽宁沈阳110004;辽宁沈阳110004  
+Analysis of eco-efficiency of steel industry  
+Dai, Tie-Jun (1); Lu, Zhong-Wu (1)  
+(1) SEPA Key Laboratory of Eco-Industry, Northeastern University, Shenyang
+110004, China  
+|
+
+|  
+---  
+**摘要**
+从工业生态学的角度定义了“产品”的概念,给出了分析钢铁企业生态效率的三个指标资源效率、能源效率和环境效率.以某钢铁企业为例,采用工业代谢分析方法,建立了企业物料结算平衡表,理清了输入、输出企业的资源、能源、产品、废品和污染物的种类及数量,并对该企业生态效率的现状进行了分析比较.在此基础上,讨论了企业间相互利用废品和污染物的共生关系对企业资源效率、能源效率和环境效率的影响.结果表明,在企业间形成相互利用废品和污染物的共生关系,是解决企业资源、能源和环境问题的重要方法和途径.
+|  
+**关键词** ： 生态效率,  工业代谢,  共生关系,  再资源化率  
+**Abstract** ：Defining the product from the angle of industrial ecology, the
+three indices of eco-efficiency are given, i.e., resources efficiency, energy
+efficiency and environment efficiency, to analyze the eco-efficiency of steel
+industry. Taking the data of a steel enterprise as example, an input/output
+balance sheet was worked out by way of industrial metabolism to make sure of
+the sorts and amounts of resources, energy, products, wastes and pollutants
+and analyze the eco-efficiency of the steel enterprise. Discusses the
+influence of symbiotic relationship among the wastes/pollutants utilized
+mutually by different enterprises on the three efficiencies mentioned above.
+It was found that the formation of such a symbiotic relationship is an
+important way to solve the increasingly serious problems of resources, energy
+and environment in China's steel industry.  
+**收稿日期:** 2013-06-24  
+**基金资助:** 国家自然科学基金资助项目(50334020);;  
+**通讯作者:** Dai, T.-J.  **E-mail:** daitiejun@163.com  
+**作者简介** : -  
+  
+| [1] |  冯民;顾晓薇;王青;景玎;. **沈阳市可持续发展的生态资源占用核算与分析**[J]. 东北大学学报(自然科学版), 2009,
+30(2): 291-294.  
+---|---  
+[2] |  于宏民;王青;俞雪飞;刘建兴;. **中国钢铁行业的生态足迹**[J]. 东北大学学报(自然科学版), 2008, 29(6):
+897-900.  
+[3] |  孙鹏;王青;刘建兴;顾晓薇;. **沈阳市交通生态足迹的实证研究**[J]. 东北大学学报(自然科学版), 2007, 28(3):
+438-440.  
+[4] |  李广军;王青;顾晓薇;初道忠;. **生态足迹在中国城市发展中的应用**[J]. 东北大学学报(自然科学版), 2007, 28(10):
+1485-1488.  
+[5] |  顾晓薇;王青;李广军;王军;. **应用生态足迹指标对沈阳市高校可持续发展的研究**[J]. 东北大学学报(自然科学版), 2006,
+27(7): 823-826.
+
+

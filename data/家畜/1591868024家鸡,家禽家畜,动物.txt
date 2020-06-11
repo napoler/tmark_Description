@@ -1,0 +1,27 @@
+家鸡,家禽家畜,动物摄影,摄影,汇图网www.huitu.com
+_独家销售_
+
+编号：20200128155232589060 像素：6720×4480 (PX) 格式： JPG _jpg_ 大小：3.14 MB 分辨率：300 DPI
+颜色模式：RGB
+
+{{item.Text}} |
+
+版权信息 {{item.title}}
+
+授权期限 永久授权
+
+支付价格 **_￥_ {{price||0}}**
+
+VIP价 **_￥_ {{(originalPrice*vipInfo.picDisCount).toFixed(2)}}**
+原价￥{{originalPrice||0}}
+
+支付价格 **_￥_ {{originalPrice||0}}** VIP价 **_￥_
+{{(originalPrice*vipInfo.picDisCount).toFixed(2)}}** 成为VIP>>
+
+立即购买 加入购物车
+
+图片不满足需求？希望找设计师进行订制设计，请点击 私人订制
+
+购买有疑问？请 **联系客服**
+
+

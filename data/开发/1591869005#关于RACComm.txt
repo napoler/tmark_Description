@@ -1,0 +1,570 @@
+#关于RACCommand的思考 - Android移动开发技术文章_手机开发 - 红黑联盟
+简介
+在ReactiveCocoa中通过对相关的控件添加了信号的特征，采用category的方法在UIButton中添加其category。可以发现在ReactiveCocoa中有`UIButton+RACComandSupport.h`的头文件中有
+
+    
+    
+    
+    @class RACCommand;
+    
+    @interface UIButton (RACCommandSupport)
+    
+    /// Sets the button's command. When the button is clicked, the command is
+    /// executed with the sender of the event. The button's enabledness is bound
+    /// to the command's `canExecute`.
+    @property (nonatomic, strong) RACCommand *rac_command;
+    
+    @end
+
+通过categoryReactiveCocoa为UIButton添加了一个属性，也就是一个RACCommand类。通过RACCommand该类可以方便控件完成一些动态性的功能。在本文中我们针对UIButton控件分析了RACComand的相关功能和使用。
+
+首先需要关注的是类RACComand类的几个关键属性
+
+  
+`@property (nonatomic, strong, readonly) RACSignal *executionSignals; `
+
+`//由于Errors的会在内部被直接捕捉，下文分析initWithSignalBlock方法的时候，会对这一点捕捉错误的代码进行一个详尽的分析。所以如果想要捕捉错误的话，可以采用-
+execute的方法或者是对block中的信号进行封装`[RACSignal materialize].这个属性可以定义了一个signal of
+signals 所以在针对executionSignals的操作时候一般可以采用flatten 或者是flatMap将signal of
+signals重新映射为signal，但是采用flatMap的方法不能捕捉到Error，和Completed的信号 。``
+
+``Only executions that begin after subscription will be sent upon this signal.
+All inner signals will arrive upon the main thread.``
+
+  
+```@property (nonatomic, strong, readonly) RACSignal *executing; ```
+
+```//该属性定义了是否还处在执行阶段```
+
+  
+````@property (nonatomic, strong, readonly) RACSignal *enabled; ````
+
+  
+`````@property (nonatomic, strong, readonly) RACSignal *errors; `````
+
+`````该属性是把RACComand中的捕捉到的error信息都存在这里`````
+
+  
+``````@property (atomic, assign) BOOL allowsConcurrentExecution; ``````
+
+``````该属性判断可并行性，默认的是NO不可并行，不可并行时候会使得button的enabled的属性在执行时候变为enabled=NO``````
+
+``````##RACCommand源码分析 关于RACComand的一个最常见的用法形式就是 ``````
+
+    
+    
+    
+    
+        _btn.rac_command=
+        [[RACCommand alloc]initWithSignalBlock:^RACSignal *(id input) {
+            //todo
+            }];
+
+``````当然还有另一个常用的函数`- (id)initWithEnabled:(RACSignal *)enabledSignal
+signalBlock:(RACSignal * (^)(id
+input))signalBlock`该函数多了一个参数`enabledSignal`可以实现对button的enabled功能的控制。
+在RACComand的头文件当中有以下解释 ``````
+
+    
+    
+    
+    /// Initializes a command that is conditionally enabled.
+    ///
+    /// This is the designated initializer for this class.
+    ///
+    /// enabledSignal - A signal of BOOLs which indicate whether the command should
+    ///                 be enabled. `enabled` will be based on the latest value sent
+    ///                 from this signal. Before any values are sent, `enabled` will
+    ///                 default to YES. This argument may be nil.
+    /// signalBlock   - A block which will map each input value (passed to -execute:)
+    ///                 to a signal of work. The returned signal will be multicasted
+    ///                 to a replay subject, sent on `executionSignals`, then
+    ///                 subscribed to synchronously. Neither the block nor the
+    ///                 returned signal may be nil.
+    - (id)initWithEnabled:(RACSignal *)enabledSignal signalBlock:
+                                        (RACSignal * (^)(InputType input))signalBlock;
+
+``````其中enabledSignal用来判断Button的enabled什么时候满足。该信号可以为nil，默认情况下enabled为YES。
+在ReactiveCocoa中针对控件的enabled属性有很多的应用，例如只有在输入格式正确的账号和密码以后才能使得登录按钮变成enable。这样就可以在viewmodel中定义一个判断逻辑通过返回内容为BOOL的信号来决定enabled的值。
+但是很多采用宏的形式去实现 ``````
+
+    
+    
+    
+    RAC(btn,enabled)=RACObserve(viewModel,isvalid)
+    //通过观察viewModel中的isvalid可以设置Button的enabled是否可用
+
+``````而其中的signalBlock就是要执行的command，该command只有在enabled为YES的情况下，可以执行。并行与否就是通过allowsConcurrentExecution来控制enabled，而command得执行又去查看enabled的状态。
+注意此处enabled只能绑定一次，绑定多次时候会报错 下面我们要详细的分析一下 ``````
+
+    
+    
+    
+    - (id)initWithSignalBlock:(RACSignal * (^)(id input))signalBlock;
+    - (id)initWithEnabled:(RACSignal *)enabledSignal signalBlock:(RACSignal * (^)(
+    id input))signalBlock;
+
+``````这两个函数，而`- (id)initWithSignalBlock:(RACSignal * (^)(id
+input))signalBlock;`等同于`- (id)initWithEnabled:nil signalBlock:(RACSignal *
+(^)(id input))signalBlock;`所以重点解释一下第二个函数。源码面前了无秘密。这也是IOS的一个痛点，毕竟很多框架都不开源
+``````
+
+    
+    
+    
+    - (id)initWithEnabled:(RACSignal *)enabledSignal signalBlock:(RACSignal * (^)(id input))signalBlock {
+        NSCParameterAssert(signalBlock != nil);
+    
+        self = [super init];
+        if (self == nil) return nil;
+    
+        _addedExecutionSignalsSubject = [RACSubject new];
+        _allowsConcurrentExecutionSubject = [RACSubject new];
+        _signalBlock = [signalBlock copy];
+    
+        _executionSignals = [[[self.addedExecutionSignalsSubject
+            map:^(RACSignal *signal) {
+                return [signal catchTo:[RACSignal empty]];
+            }]
+            deliverOn:RACScheduler.mainThreadScheduler]
+            setNameWithFormat:@"%@ -executionSignals", self];
+    
+        // `errors` needs to be multicasted so that it picks up all
+        // `activeExecutionSignals` that are added.
+        //
+        // In other words, if someone subscribes to `errors` _after_ an execution
+        // has started, it should still receive any error from that execution.
+        RACMulticastConnection *errorsConnection = [[[self.addedExecutionSignalsSubject
+            flattenMap:^(RACSignal *signal) {
+                return [[signal
+                    ignoreValues]
+                    catch:^(NSError *error) {
+                        return [RACSignal return:error];
+                    }];
+            }]
+            deliverOn:RACScheduler.mainThreadScheduler]
+            publish];
+    
+        _errors = [errorsConnection.signal setNameWithFormat:@"%@ -errors", self];
+        [errorsConnection connect];
+    
+        RACSignal *immediateExecuting = [[[[self.addedExecutionSignalsSubject
+            flattenMap:^(RACSignal *signal) {
+                return [[[signal
+                    catchTo:[RACSignal empty]]
+                    then:^{
+                        return [RACSignal return:@-1];
+                    }]
+                    startWith:@1];
+            }]
+            scanWithStart:@0 reduce:^(NSNumber *running, NSNumber *next) {
+                return @(running.integerValue + next.integerValue);
+            }]
+            map:^(NSNumber *count) {
+                return @(count.integerValue > 0);
+            }]
+            startWith:@NO];
+    
+        _executing = [[[[[immediateExecuting
+            deliverOn:RACScheduler.mainThreadScheduler]
+            // This is useful before the first value arrives on the main thread.
+            startWith:@NO]
+            distinctUntilChanged]
+            replayLast]
+            setNameWithFormat:@"%@ -executing", self];
+    
+        RACSignal *moreExecutionsAllowed = [RACSignal
+            if:[self.allowsConcurrentExecutionSubject startWith:@NO]
+            then:[RACSignal return:@YES]
+            else:[immediateExecuting not]];
+    
+        if (enabledSignal == nil) {
+            enabledSignal = [RACSignal return:@YES];
+        } else {
+            enabledSignal = [enabledSignal startWith:@YES];
+        }
+    
+        _immediateEnabled = [[[[RACSignal
+            combineLatest:@[ enabledSignal, moreExecutionsAllowed ]]
+            and]
+            takeUntil:self.rac_willDeallocSignal]
+            replayLast];
+    
+        _enabled = [[[[[self.immediateEnabled
+            take:1]
+            concat:[[self.immediateEnabled skip:1] deliverOn:RACScheduler.mainThreadScheduler]]
+            distinctUntilChanged]
+            replayLast]
+            setNameWithFormat:@"%@ -enabled", self];
+    
+        return self;
+    }
+
+``````我们详细的分析一下该部分 ``````
+
+    
+    
+    
+    
+        _addedExecutionSignalsSubject = [RACSubject new];
+        _allowsConcurrentExecutionSubject = [RACSubject new];
+        _signalBlock = [signalBlock copy];
+    
+        _executionSignals = [[[self.addedExecutionSignalsSubject
+            map:^(RACSignal *signal) {
+                return [signal catchTo:[RACSignal empty]];
+            }]
+            deliverOn:RACScheduler.mainThreadScheduler]
+            setNameWithFormat:@"%@ -executionSignals", self];
+
+``````?该部分首先创建了`_addedExecutionSignalsSubject`和`_allowsConcurrentExecutionSubject`两个subject。之后就是最重要的`_executionSignals`
+的信号。因为`_executionSignals`该信号是跟踪参数中的`signalBlock`的信号，但是在整个函数中都没有看到`signalBlock`和`_executionSignals`或者是`addedExecutionSignalsSubject`
+的互动。搜索整个文件在函数`execute`中可以发现以下绑定的代码 ``````
+
+    
+    
+    
+        RACSignal *signal = self.signalBlock(input);
+        NSCAssert(signal != nil, @"nil signal returned from signal block for value: %@", input);
+    
+        // We subscribe to the signal on the main thread so that it occurs _after_
+        // -addActiveExecutionSignal: completes below.
+        //
+        // This means that `executing` and `enabled` will send updated values before
+        // the signal actually starts performing work.
+        RACMulticastConnection *connection = [[signal
+            subscribeOn:RACScheduler.mainThreadScheduler]
+            multicast:[RACReplaySubject subject]];
+    
+        [self.addedExecutionSignalsSubject sendNext:connection.signal];
+    
+        [connection connect];
+
+``````该函数中对signalBlock信号进行multicast。代码中的注释提到：我们订阅信号到主线程上，这样使得在信号真正开始工作之前`executing`
+和 `enabled` 将会被发送更新
+对于multicast不了解的可以查看[细说ReactiveCocoa的冷信号与热信号](https://tech.meituan.com/talk-
+about-reactivecocoas-cold-signal-and-hot-signal-part-1.html)
+?但是这个函数什么是被调用呢？函数`execute`的执行必须是在`- (id)initWithEnabled:nil
+signalBlock:(RACSignal * (^)(id input))signalBlock;`
+本文是采用UIButton作为例子的跟踪UIButton+RACCommandSupport.m文件，可以看到 ``````
+
+    
+    
+    
+    - (void)rac_commandPerformAction:(id)sender {
+        [self.rac_command execute:sender];
+    }
+
+``````在不同的控件中，都有相应的调用`execute`。例如在UIRefreshControl+RACCommandSupport.m文件中有如下调用函数`execute`
+``````
+
+    
+    
+    
+        RACDisposable *executionDisposable = [[[[[self
+            rac_signalForControlEvents:UIControlEventValueChanged]
+            map:^(UIRefreshControl *x) {
+                return [[[command
+                    execute:x]
+                    catchTo:[RACSignal empty]]
+                    then:^{
+                        return [RACSignal return:x];
+                    }];
+            }]
+            concat]
+            deliverOnMainThread]
+            subscribeNext:^(UIRefreshControl *x) {
+                [x endRefreshing];
+            }];
+
+``````接下来继续分析 ``````
+
+    
+    
+    
+        RACMulticastConnection *errorsConnection = [[[self.addedExecutionSignalsSubject
+            flattenMap:^(RACSignal *signal) {
+                return [[signal
+                    ignoreValues]
+                    catch:^(NSError *error) {
+                        return [RACSignal return:error];
+                    }];
+            }]
+            deliverOn:RACScheduler.mainThreadScheduler]
+            publish];
+    
+        _errors = [errorsConnection.signal setNameWithFormat:@"%@ -errors", self];
+        [errorsConnection connect];
+
+``````关于这部分源码给出了以下解释 ``````
+
+    
+    
+    
+       // `errors` needs to be multicasted so that it picks up all
+        // `activeExecutionSignals` that are added.
+        //
+        // In other words, if someone subscribes to `errors` _after_ an execution
+        // has started, it should still receive any error from that execution.
+
+``````代码中的注释一般都是很重要的。如果有人在执行开始之后订阅了`error`信号，仍然可以收到`error`信号。这个函数也是比较简单就是捕捉到`addedExecutionSignalsSubject`到其中的`error`通过RACSignal中的return函数multicast。
+继续 ``````
+
+    
+    
+    
+       RACSignal *immediateExecuting = [[[[self.addedExecutionSignalsSubject
+            flattenMap:^(RACSignal *signal) {
+                return [[[signal
+                    catchTo:[RACSignal empty]]
+                    then:^{
+                        return [RACSignal return:@-1];
+                    }]
+                    startWith:@1];
+            }]
+            scanWithStart:@0 reduce:^(NSNumber *running, NSNumber *next) {
+                return @(running.integerValue + next.integerValue);
+            }]
+            map:^(NSNumber *count) {
+                return @(count.integerValue > 0);
+            }]
+            startWith:@NO];
+    
+        _executing = [[[[[immediateExecuting
+            deliverOn:RACScheduler.mainThreadScheduler]
+            // This is useful before the first value arrives on the main thread.
+            startWith:@NO]
+            distinctUntilChanged]
+            replayLast]
+            setNameWithFormat:@"%@ -executing", self];
+
+``````该部分函数主要是根据addedExecutionSignalsSubject信号是否是空信号来判断executing来判断command是否在执行。
+最后一部分 ``````
+
+    
+    
+    
+        RACSignal *moreExecutionsAllowed = [RACSignal
+            if:[self.allowsConcurrentExecutionSubject startWith:@NO]
+            then:[RACSignal return:@YES]
+            else:[immediateExecuting not]];
+    
+        if (enabledSignal == nil) {
+            enabledSignal = [RACSignal return:@YES];
+        } else {
+            enabledSignal = [enabledSignal startWith:@YES];
+        }
+    
+        _immediateEnabled = [[[[RACSignal
+            combineLatest:@[ enabledSignal, moreExecutionsAllowed ]]
+            and]
+            takeUntil:self.rac_willDeallocSignal]
+            replayLast];
+    
+        _enabled = [[[[[self.immediateEnabled
+            take:1]
+            concat:[[self.immediateEnabled skip:1] deliverOn:RACScheduler.mainThreadScheduler]]
+            distinctUntilChanged]
+            replayLast]
+            setNameWithFormat:@"%@ -enabled", self];
+
+``````该部分主要是根据allowsConcurrentExecutionSubject和enabledSignal来设置`enabled`的相关属性
+##实例展示
+?为了避免纸上谈书，所以还是需要代码去验证相关的使用，为了不使用nslog给出一个可视化的结果我们通过在main.stroyboard中添加一个textView和Uibutton。在实际项目中不推荐使用storyboard，建议使用masonry来做布局工作。一个基本的显示
+``````
+
+`````` ``````
+
+``````通过以下语句把我们想要的信息打印到textview中去``````
+
+    
+    
+    
+          self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"signal-done\n"] ];;
+
+``````因为只是为了做测验，没有严格的按照mvvm的模式来写，我们把全部的逻辑都放在了view
+controller中进行实现，这也是为什么mvvm被需要的原因，vc太繁杂了 ``````
+
+    
+    
+    
+        _btn.rac_command=
+        [[RACCommand alloc]initWithSignalBlock:^RACSignal *(id input) {
+            @strongify(self)
+            NSLog(@"button was pressed!");
+            return [[[RACSignal createSignal:^RACDisposable *(id subscriber) {
+                [subscriber sendNext:@"111111"];
+           //  [subscriber sendError:[NSError errorWithDomain:@"" code:120 userInfo:nil]];
+                [subscriber sendCompleted];
+               self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"signal-done\n"] ];;
+                return nil;
+    
+            }]initially:^{
+                self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"initially\n"] ];;
+            }]finally:^{
+                self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"finally\n"] ];;
+            }];
+        }];
+        [[self.btn.rac_command.executionSignals flatten]
+         subscribeNext:^(id x) {
+             self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"subsribenext%@\n",x] ];;
+         }];
+    
+        [self.btn.rac_command.errors
+         subscribeNext:^(NSError *error) {
+             self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"error=%@\n",error] ];;
+         }];
+
+``````当点击Button的时候，会出现以下的结果 ``````
+
+`````` ``````
+
+``````可以看到在上面的过程当中先执行了`initially然后block中的信号发出了一个sendNext信号，这个信号采用multicas的形式转发出去，上文executionSignals其实是block中信号的一个map，但是由于executionSignals是一个signal
+of signals，所以在这里采用的是flatten的形式将它转化为signal，其实这个转化，存在以下几种方法。```````
+
+```````**第一种**```````
+
+    
+    
+    
+            [self.btn.rac_command.executionSignals
+             subscribeNext:^(RACSignal * subscribeSignal) {
+                 [subscribeSignal subscribeNext:^(id x) {
+                     self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"subsribenext%@\n",x] ];; ;
+                 } error:^(NSError *error) {
+                     ;
+                 }];
+    
+             }];
+
+```````因为采用的是信号的信号，所以第一次subscribeNext的出来的是RACSignal，所以需要在subscribeNext一次才能得到信号内的内容。
+**第二种** ```````
+
+    
+    
+    
+        [[self.btn.rac_command.executionSignals switchToLatest]
+         subscribeNext:^(id x) {
+             self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"subsribenext%@\n",x] ];;
+         }];
+
+```````这中方法的关键是函数switchToLatest，这个函数接受的一定是一个signal of signals，返回的是所有的signal of
+signals中最新的一个signal 第三种方法 ```````
+
+    
+    
+    
+        [[self.btn.rac_command.executionSignals flattenMap:^RACStream *(RACSignal* subscribeSignal) {
+            return subscribeSignal;
+        }]
+         subscribeNext:^(id x) {
+             self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"subsribenext%@\n",x] ];;
+         }];
+
+```````其实flatten方法就是等同于该方法flattenMap ```````
+
+    
+    
+    
+    - (instancetype)flatten {
+        return [[self flattenMap:^(id value) {
+            return value;
+        }] setNameWithFormat:@"[%@] -flatten", self.name];
+    }
+
+```````**完了？？** **木有** 发现没有上文中是不能接受到block中的completed信号，并对其进行处理？？
+在介绍另外一种实现的时候，我们先在block尝试发送error看看结果 ```````
+
+``````` ```````
+
+```````可以看到error在`rac_command.errors被捕捉并且被执行了。  
+下面看一下另外一种实现````````
+
+    
+    
+    
+        //正确的执行方法1
+        _btn.rac_command=
+        [[RACCommand alloc]initWithSignalBlock:^RACSignal *(id input) {
+          @strongify(self)
+              self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"button was pressed\n"] ];
+    
+            return [[[[RACSignal createSignal:^RACDisposable *(id subscriber)
+                       {
+    
+                [subscriber sendNext:@"111111"];
+             // [subscriber sendError:[NSError errorWithDomain:@"" code:120 userInfo:nil]];
+              [subscriber sendCompleted];
+                return nil;
+            }]materialize]
+                     initially:^{
+                  self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"block-begin\n"] ];;
+            }]
+                    finally:^{
+                  self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"block-end\n"] ];;
+            }];
+        }];
+        [self.btn.rac_command.executionSignals subscribeNext:^(RACSignal *sig) {
+            [[[sig dematerialize]deliverOn:[RACScheduler mainThreadScheduler]]subscribeNext:^(id x) {
+                self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"subscribeNext%@\n",x] ];
+            }error:^(NSError *error) {
+               self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"error==%@\n",error] ];
+            } completed:^{
+                self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"completed!\n"] ];
+            }];
+        }];
+
+````````我们将相应的结果和第一种实现进行比较 发送next和Completed的对比 ````````
+
+```````` ````````
+
+````````继续  
+发送next和error的对比````````
+
+```````` ````````
+
+````````首先上述的两张图片当中右半部分都是采用第二种方法实现的，可以看到在第二种方法当中我们有捕捉到了completed信号，但是同时我们也发现了右边部分的信号的输出顺序和左边部分采用第一种方法的输出是不一样的。  
+先简单的说明一下第二种方法的实现原理首先采用materialize函数对block发出的信号进行一个封装，继续跟踪代码，我们可以发现materialize的源码中````````
+
+    
+    
+    
+    - (RACSignal *)materialize {
+        return [[RACSignal createSignal:^(id subscriber) {
+            return [self subscribeNext:^(id x) {
+                [subscriber sendNext:[RACEvent eventWithValue:x]];
+            } error:^(NSError *error) {
+                [subscriber sendNext:[RACEvent eventWithError:error]];
+                [subscriber sendCompleted];
+            } completed:^{
+                [subscriber sendNext:RACEvent.completedEvent];
+                [subscriber sendCompleted];
+            }];
+        }] setNameWithFormat:@"[%@] -materialize", self.name];
+    }
+
+````````可以看到我们对相关的  
+signal（sendNext，error，Completed）进行了封装为sendNext。````````
+
+    
+    
+    
+        [self.btn.rac_command.executionSignals subscribeNext:^(RACSignal *sig) {
+            [[[sig dematerialize]deliverOn:[RACScheduler mainThreadScheduler]]subscribeNext:^(id x) {
+                self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"subscribeNext%@\n",x] ];
+            }error:^(NSError *error) {
+               self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"error==%@\n",error] ];
+            } completed:^{
+                self.textview.text=[self.textview.text stringByAppendingString:  [NSString stringWithFormat:@"completed!\n"] ];
+            }];
+        }];
+
+````````通过采用dematerialize函数，之前封装的信号，进行解封装.因为error在block中被封装了所以只有采用dematerialize才能显示。````````
+
+````````这里要继续分析这两种结果产生的顺序不同的一个原因。````````
+
+````````//待了解````````
+
+````````上述的两种方法中存在着一个很大的问题是二者的````````
+
+
