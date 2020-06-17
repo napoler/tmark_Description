@@ -48,7 +48,10 @@ def data_pre_train_mongo_text(keyword,train_path='../data/' ):
             
             # time_path =str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         #     break
-
+        
+        #跳过大于1000的文章
+        if len(item.content)>1000:
+            continue
         if len(item.title+item.content)<200:
             continue
         p=tclass.pre(item.content)
