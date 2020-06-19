@@ -1,0 +1,507 @@
+
+下 O
+列 O
+属 O
+于 O
+遗 O
+体 O
+化 O
+石 O
+的 O
+是 O
+（ O
+） O
+A O
+． O
+恐 O
+龙 O
+蛋 O
+的 O
+化 O
+石 O
+B O
+． O
+恐 O
+龙 O
+骨 O
+骼 O
+化 O
+石 O
+C O
+． O
+蕨 O
+类 O
+印 O
+模 O
+化 O
+石 O
+D O
+． O
+恐 O
+龙 O
+足 O
+迹 O
+化 O
+石 O
+_ O
+作 O
+业 O
+帮 O
+
+首 O
+页 O
+作 O
+业 O
+问 O
+答 O
+_ O
+_ O
+个 O
+人 O
+中 O
+心 O
+
+
+下 O
+载 O
+作 O
+业 O
+帮 O
+
+
+# O
+# O
+# O
+扫 O
+二 O
+维 O
+码 O
+下 O
+载 O
+作 O
+业 O
+帮 O
+
+
+拍 O
+照 O
+搜 O
+题 O
+， O
+秒 O
+出 O
+答 O
+案 O
+， O
+一 O
+键 O
+查 O
+看 O
+所 O
+有 O
+搜 O
+题 O
+记 O
+录 O
+
+
+# O
+# O
+# O
+下 O
+载 O
+作 O
+业 O
+帮 O
+安 O
+装 O
+包 O
+
+
+# O
+# O
+# O
+扫 O
+二 O
+维 O
+码 O
+下 O
+载 O
+作 O
+业 O
+帮 O
+
+
+拍 O
+照 O
+搜 O
+题 O
+， O
+秒 O
+出 O
+答 O
+案 O
+， O
+一 O
+键 O
+查 O
+看 O
+所 O
+有 O
+搜 O
+题 O
+记 O
+录 O
+
+
+_ O
+? O
+_ O
+题 O
+目 O
+
+
+下 O
+列 O
+属 O
+于 O
+遗 O
+体 O
+化 O
+石 O
+的 O
+是 O
+（ O
+） O
+
+
+A O
+． O
+恐 O
+龙 O
+蛋 O
+的 O
+化 O
+石 O
+
+B O
+． O
+恐 O
+龙 O
+骨 O
+骼 O
+化 O
+石 O
+
+C O
+． O
+蕨 O
+类 O
+印 O
+模 O
+化 O
+石 O
+
+D O
+． O
+恐 O
+龙 O
+足 O
+迹 O
+化 O
+石 O
+
+
+_ O
+生 O
+物 O
+_ O
+
+
+_ O
+_ O
+_ O
+作 O
+业 O
+帮 O
+用 O
+户 O
+_ O
+_ O
+_ O
+_ O
+2 O
+0 O
+1 O
+7 O
+- O
+1 O
+0 O
+- O
+1 O
+9 O
+_ O
+_ O
+举 O
+报 O
+_ O
+
+
+# O
+# O
+# O
+扫 O
+二 O
+维 O
+码 O
+下 O
+载 O
+作 O
+业 O
+帮 O
+
+
+拍 O
+照 O
+搜 O
+题 O
+， O
+秒 O
+出 O
+答 O
+案 O
+， O
+一 O
+键 O
+查 O
+看 O
+所 O
+有 O
+搜 O
+题 O
+记 O
+录 O
+
+
+问 O
+题 O
+解 O
+析 O
+
+
+化 O
+石 O
+是 O
+生 O
+物 O
+体 O
+的 O
+坚 O
+硬 O
+部 O
+分 O
+形 O
+成 O
+的 O
+， O
+如 O
+植 O
+物 O
+茎 O
+的 O
+化 O
+石 O
+， O
+动 O
+物 O
+的 O
+牙 O
+齿 O
+、 O
+骨 O
+骼 O
+、 O
+贝 O
+壳 O
+等 O
+的 O
+化 O
+石 O
+， O
+有 O
+些 O
+化 O
+石 O
+则 O
+是 O
+生 B-描述
+物 M-描述
+体 M-描述
+的 M-描述
+印 M-描述
+痕 M-描述
+所 M-描述
+形 M-描述
+成 M-描述
+的 E-描述
+， O
+如 O
+树 B-描述
+叶 M-描述
+的 M-描述
+印 M-描述
+痕 M-描述
+化 M-描述
+石 E-描述
+， O
+因 O
+此 O
+所 O
+有 O
+的 O
+化 O
+石 O
+都 O
+是 O
+生 O
+物 O
+的 O
+遗 O
+体 O
+、 O
+遗 O
+物 O
+（ O
+如 O
+卵 O
+、 O
+粪 O
+便 O
+等 O
+） O
+或 O
+生 O
+活 O
+痕 O
+迹 O
+（ O
+如 O
+动 O
+物 O
+的 O
+脚 O
+印 O
+、 O
+爬 O
+迹 O
+等 O
+） O
+， O
+由 O
+于 O
+某 O
+种 O
+原 O
+因 O
+被 O
+埋 O
+藏 O
+在 O
+地 O
+层 O
+中 O
+， O
+经 O
+过 O
+漫 O
+长 O
+的 O
+年 O
+代 O
+和 O
+复 O
+杂 O
+的 O
+变 O
+化 O
+而 O
+形 O
+成 O
+的 O
+． O
+
+
+名 O
+师 O
+点 O
+评 O
+
+
+
+
+本 O
+题 O
+考 O
+点 O
+： O
+
+
+生 O
+物 O
+进 O
+化 O
+的 O
+证 O
+据 O
+- O
+化 O
+石 O
+． O
+
+
+
+考 O
+点 O
+点 O
+评 O
+： O
+
+
+解 O
+答 O
+此 O
+类 O
+题 O
+目 O
+的 O
+关 O
+键 O
+是 O
+理 O
+解 O
+掌 O
+握 O
+化 O
+石 O
+的 O
+形 O
+成 O
+． O
+
+
+_ O
+_ O
+
+
+扫 O
+描 O
+下 O
+载 O
+二 O
+维 O
+码 O
+_ O
+_ O
+
+
+
