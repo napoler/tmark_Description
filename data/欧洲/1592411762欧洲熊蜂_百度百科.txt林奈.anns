@@ -1,0 +1,601 @@
+欧 O
+洲 O
+熊 O
+蜂 O
+_ O
+百 O
+度 O
+百 O
+科 O
+
+
+
+# O
+  B-描述
+欧 M-描述
+洲 M-描述
+熊 M-描述
+蜂 E-描述
+
+
+_ O
+_ O
+编 O
+辑 O
+_ O
+_ O
+锁 O
+定 O
+_ O
+_ O
+讨 O
+论 O
+
+
+欧 O
+洲 O
+熊 O
+蜂 O
+
+
+* O
+* O
+_ O
+B O
+o O
+m O
+b O
+u O
+s O
+t O
+e O
+r O
+r O
+e O
+s O
+t O
+r O
+i O
+s O
+_ O
+* O
+* O
+
+
+( O
+L O
+i O
+n O
+n O
+a O
+e O
+u O
+s O
+, O
+1 O
+7 O
+5 O
+8 O
+) O
+是 O
+一 O
+种 O
+
+
+蜜 O
+蜂 O
+科 O
+熊 O
+蜂 O
+属 O
+
+
+类 O
+生 O
+物 O
+， O
+是 O
+欧 O
+洲 O
+最 O
+常 O
+见 O
+的 O
+
+
+熊 O
+蜂 O
+
+
+之 O
+一 O
+。 O
+蜂 O
+后 O
+长 O
+2 O
+- O
+2 O
+. O
+7 O
+厘 O
+米 O
+， O
+工 O
+蜂 O
+1 O
+. O
+5 O
+- O
+2 O
+厘 O
+米 O
+。 O
+
+
+中 O
+文 O
+学 O
+名 O
+
+
+欧 O
+洲 O
+熊 O
+蜂 O
+
+拉 O
+丁 O
+学 O
+名 O
+
+
+_ O
+B O
+o O
+m O
+b O
+u O
+s O
+t O
+e O
+r O
+r O
+e O
+s O
+t O
+r O
+i O
+s O
+_ O
+( O
+L O
+i O
+n O
+n O
+a O
+e O
+u O
+s O
+, O
+1 O
+7 O
+5 O
+8 O
+) O
+
+二 O
+名 O
+法 O
+
+
+_ O
+B O
+o O
+m O
+b O
+u O
+s O
+t O
+e O
+r O
+r O
+e O
+s O
+t O
+r O
+i O
+s O
+_ O
+
+
+
+动 O
+物 O
+界 O
+
+
+
+节 O
+肢 O
+动 O
+物 O
+门 O
+
+亚 O
+门 O
+
+
+六 O
+足 O
+亚 O
+门 O
+
+
+
+昆 O
+虫 O
+纲 O
+
+亚 O
+纲 O
+
+
+有 O
+翅 O
+亚 O
+纲 O
+
+
+
+
+膜 O
+翅 O
+目 O
+
+亚 O
+目 O
+
+
+细 O
+腰 O
+亚 O
+目 O
+
+
+
+蜜 O
+蜂 O
+科 O
+
+亚 O
+科 O
+
+
+蜜 O
+蜂 O
+亚 O
+科 O
+
+
+
+熊 O
+蜂 O
+族 O
+
+
+
+熊 O
+蜂 O
+属 O
+
+
+
+欧 O
+洲 O
+熊 O
+蜂 O
+
+总 O
+科 O
+
+
+蜜 O
+蜂 O
+总 O
+科 O
+
+命 O
+名 O
+者 O
+及 O
+时 O
+间 O
+
+
+( O
+林 B-实体
+奈 E-实体
+, O
+1 B-描述
+7 M-描述
+5 M-描述
+8 E-描述
+) O
+
+
+* O
+* O
+欧 O
+洲 O
+熊 O
+蜂 O
+* O
+* O
+
+
+（ O
+学 O
+名 O
+： O
+
+
+_ O
+B O
+o O
+m O
+b O
+u O
+s O
+t O
+e O
+r O
+r O
+e O
+s O
+t O
+r O
+i O
+s O
+_ O
+
+
+） O
+是 O
+欧 O
+洲 O
+最 O
+常 O
+见 O
+的 O
+
+
+熊 O
+蜂 O
+
+
+之 O
+一 O
+。 O
+蜂 O
+后 O
+长 O
+2 O
+- O
+2 O
+. O
+7 O
+厘 O
+米 O
+， O
+工 O
+蜂 O
+1 O
+. O
+5 O
+- O
+2 O
+厘 O
+米 O
+。 O
+工 O
+蜂 O
+的 O
+特 O
+点 O
+是 O
+它 O
+们 O
+腹 O
+部 O
+的 O
+尾 O
+端 O
+是 O
+白 O
+色 O
+， O
+看 O
+起 O
+来 O
+与 O
+它 O
+的 O
+近 O
+亲 O
+
+
+明 O
+亮 O
+熊 O
+蜂 O
+
+
+
+
+_ O
+B O
+o O
+m O
+b O
+u O
+s O
+l O
+u O
+c O
+o O
+r O
+u O
+m O
+_ O
+
+
+） O
+很 O
+相 O
+似 O
+， O
+后 O
+者 O
+的 O
+尾 O
+巴 O
+为 O
+白 O
+色 O
+。 O
+
+
+这 O
+种 O
+蜜 O
+蜂 O
+回 O
+巢 O
+的 O
+距 O
+离 O
+最 O
+远 O
+可 O
+达 O
+1 O
+3 O
+公 O
+里 O
+， O
+虽 O
+然 O
+大 O
+多 O
+数 O
+从 O
+巢 O
+5 O
+公 O
+里 O
+范 O
+围 O
+内 O
+找 O
+寻 O
+食 O
+物 O
+。 O
+
+
+[ O
+1 O
+] O
+
+
+欧 O
+洲 O
+熊 O
+蜂 O
+图 O
+片 O
+( O
+2 O
+张 O
+) O
+
+
+参 O
+考 O
+资 O
+料 O
+
+
+
+
+* O
+1 O
+. O
+^ O
+L O
+o O
+u O
+i O
+s O
+a O
+C O
+h O
+e O
+u O
+n O
+g O
+. O
+H O
+o O
+m O
+i O
+n O
+g O
+i O
+n O
+s O
+t O
+i O
+n O
+c O
+t O
+o O
+f O
+b O
+e O
+e O
+s O
+s O
+u O
+r O
+p O
+r O
+i O
+s O
+e O
+s O
+. O
+B O
+B O
+C O
+N O
+e O
+w O
+s O
+. O
+J O
+u O
+l O
+y O
+2 O
+6 O
+, O
+2 O
+0 O
+0 O
+6 O
+. O
+
+
+

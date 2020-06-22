@@ -1,0 +1,10 @@
+审稿人说“显著性差异小”是什么意思？求解答！ - 医学统计和生物统计讨论版 -丁香园论坛
+大家好，我论文写的是正常对照组与夜磨牙患者脑干内GABA浓度的差异。审稿人给我的意见是：There is a little number subjects
+for this study, and small difference for significance of GABA value in
+brainstem between the SB patients and control with over lapped value
+(17.67±1.66 vs. 16.10±2.18). Please calculate of statistical power, effect
+size and appropriate number of subjects. After re-analyzed with proper number
+of subjects, Results and Discussion could be evaluated.
+样本量小我能理解，但是显著性差异小是什么意思？显著性差异有大小吗？他让我计算检验效能，但是此指标的差异是有显著性的，也需要计算检验效能吗？望大神回答，感谢。
+
+
