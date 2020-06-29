@@ -151,7 +151,7 @@ data_path='../data'
 ttf=tkitFile.File()
 tt=tkitText.Text()
 data=[]
-limit=480 #这里配置多少字分段
+limit=500 #这里配置多少字分段
 anns=[]
 bad=0
 good=0
@@ -255,6 +255,8 @@ for f_path in ttf.all_path(data_path):
             one=((m+['X']+one_x,w+['[SEP]']+one_y))
                 # one[1]=
             data.append(one)
+            # 循环一次即退出
+            break
             # print("1111")
 # # print(data)
 c=int(len(data)*0.7)
@@ -284,7 +286,13 @@ bad_files=list(set(bad_files))
 for o in bad_files:
     print(o)
 
+print(len(data))
 
+# for it in data:
+#     print(len(it[0]),len(it[1]))
+print("缺少实体：",bad)
+print("good实体：",good)
+print(len(anns))
 
 #一般无需重新生成labels文件
 # save_labels(data,"../data/labels.txt")

@@ -1,0 +1,19 @@
+濒危植物夏蜡梅ISSR扩增条件的优化
+|  
+---  
+濒危植物夏蜡梅ISSR扩增条件的优化  
+金则新;李钧敏  
+(台州学院生态研究所，临海 317000)  
+Optimization of ISSR Amplification Conditions in Endangered Plant
+Sinocalycanthus chinensis  
+JIN Ze-Xin;LI Jun-Min  
+(Institute of Ecology, TaiZhou University, Linhai 317000)  
+|
+
+|  
+---  
+**文章导读**  
+**摘要** 为了确保ISSR分析结果的可靠性和重复性，有必要进行ISSR-
+PCR反应体系的优化。以濒危植物夏蜡梅的基因组DNA为研究对象，利用单因素试验，测试了ISSR-PCR反应体系中镁离子，dNTP，模板DNA含量，
+_Taq_ DNA聚合酶量、BSA浓度、引物浓度、甘油浓度等7种因素对反应结果的影响，经过优化实验，建立了夏蜡梅ISSR-PCR最佳反应体系：10 μL
+PCR反应体积，1× _Taq_ 酶配套缓冲液（10 mmol·L-1 Tris·HC

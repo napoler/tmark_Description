@@ -49,10 +49,10 @@ def data_pre_train_mongo_text(keyword,train_path='../data/' ):
             # time_path =str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         #     break
         
-        #跳过大于1000的文章
-        if len(item.content)>1000:
-            continue
-        if len(item.title+item.content)<200:
+        # #跳过大于1000的文章
+        # if len(item.content)>1000:
+        #     continue
+        if len(item.title+item.content)<50:
             continue
         p=tclass.pre(item.content)
         # print(p)
@@ -66,7 +66,7 @@ def data_pre_train_mongo_text(keyword,train_path='../data/' ):
             with open(file_path,'w',encoding = 'utf-8') as f1:
                 
                 f1.write(item.title+"\n")
-                f1.write(item.content+"\n")
+                f1.write(item.content[:500]+"\n")
         except:
             pass
 
